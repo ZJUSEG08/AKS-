@@ -47,9 +47,21 @@ public class HeartBeat extends Thread {
                     String result=fromServer.getString("result");
                     if (result.equals("Success")){
 
+
+
+
+
+                        //一键支付成功地推送
                     }else{
                         if (result.equals("Fail")){
 
+
+
+
+
+
+
+                            //一键支付失败的推送
                         }
                     }
                 }
