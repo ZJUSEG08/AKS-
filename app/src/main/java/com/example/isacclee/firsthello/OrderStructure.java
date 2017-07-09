@@ -20,6 +20,7 @@ public class OrderStructure {
     public String address;
     public String supplier;
     public String expressID;
-    public States statesList;
+    public int numOfStates;
+    public States[] statesList;
 
 }

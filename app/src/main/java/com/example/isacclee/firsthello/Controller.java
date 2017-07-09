@@ -272,4 +272,86 @@ public class Controller {
         return answer;
     }
 
+    public int OrderList(String email, OrderStructure[] result) {
+
+        String ToServerString=null;
+        JSONObject ToServer = new JSONObject();
+        int answer=0;
+        try {
+            ToServer.put("email", email);
+            ToServerString = ToServer.toString();
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        try{
+            Connection HeartBeatConnection=new Connection("OrderList");
+            HeartBeatConnection.send(ToServerString);
+            String line;
+            while ((line = HeartBeatConnection.br.readLine()) != null) {
+                //接受请求结果
+                JSONObject fromServer=new JSONObject(line);
+                JSONArray orderList=fromServer.getJSONArray("orderList");
+                answer=orderList.length();
+                for (int i=0;i<answer;i++)
+                {
+                    JSONObject order=orderList.getJSONObject(i);
+                    result[i].orderID=order.getString("orderID");
+                    result[i].goodsID=order.getString("goodsID");
+                    result[i].number=order.getInt("number");
+                    result[i].state=order.getString("state");
+                }
+            }
+            HeartBeatConnection.drop();
+            //断开连接*/
+        }catch(Exception e){
+
+        };
+        return answer;
+    }
+
+    public void OrderInfo(OrderStructure order) {
+
+        String ToServerString=null;
+        JSONObject ToServer = new JSONObject();
+        try {
+            ToServer.put("orderID", order.orderID);
+            ToServerString = ToServer.toString();
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        try{
+            Connection HeartBeatConnection=new Connection("OrderInfo");
+            HeartBeatConnection.send(ToServerString);
+            String line;
+            while ((line = HeartBeatConnection.br.readLine()) != null) {
+                //接受请求结果
+                JSONObject fromServer=new JSONObject(line);
+                order.goodsID=fromServer.getString("goodsID");
+                order.number=fromServer.getInt("number");
+                order.creatingTime=fromServer.getString("creatingTime");
+                order.sendingTime=fromServer.getString("sendingTime");
+                order.receiver=fromServer.getString("receiver");
+                order.address=fromServer.getString("address");
+                order.supplier=fromServer.getString("supplier");
+                order.expressID=fromServer.getString("expressID");
+
+                JSONArray statesList=fromServer.getJSONArray("statesList");
+                order.numOfStates=statesList.length();
+                for (int i=0;i<order.numOfStates;i++)
+                {
+                    JSONObject state=statesList.getJSONObject(i);
+                    order.statesList[i].time=state.getString("time");
+                    order.statesList[i].state=state.getString("state");
+                }
+            }
+            HeartBeatConnection.drop();
+            //断开连接*/
+        }catch(Exception e){
+
+        };
+    }
 }
