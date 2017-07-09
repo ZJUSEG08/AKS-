@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Firsthello</string>
+    <string name="app_name">AKS+</string>
     <string name="edit_message">账号/邮箱</string>
     <string name="button_signup">登录</string>
     <string name="title_activity_login">AKS+</string>

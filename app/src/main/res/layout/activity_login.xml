@@ -73,13 +73,13 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/email_sign_up_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/action_sign_up" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/forget_password_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/action_forget_password" />
