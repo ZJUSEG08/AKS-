@@ -2,6 +2,8 @@
  * Created by Pro15 on 17/7/8.
  */
 
+package com.example.isacclee.firsthello.WithServer;
+
 import org.json.JSONObject;
 import org.json.JSONException;
 import org.json.JSONArray;
@@ -9,9 +11,6 @@ import org.json.JSONArray;
 import java.net.HttpURLConnection;
 import java.io.*;
 
-//import Connection;im
-
-import com.example.isacclee.
 
 public class HeartBeat extends Thread {
 
