@@ -2,11 +2,12 @@
  * Created by Pro15 on 17/7/8.
  */
 
-package com.example.isacclee.firsthello.WithServer;
+package com.example.isacclee.firsthello;
 
 import org.json.JSONObject;
 import org.json.JSONException;
 import org.json.JSONArray;
+import java.lang.String;
 
 import java.net.HttpURLConnection;
 import java.io.*;
@@ -32,32 +33,16 @@ public class HeartBeat extends Thread {
             time-=3000;
 
             try{
-                /*URL httpUrl = new URL("http://localhost:8080"); //……/HeartBeat
-                HttpURLConnection huc = (HttpURLConnection) httpUrl.openConnection();
-                huc.setRequestMethod("POST");
-                huc.setDoInput(true);
-                huc.setDoOutput(true);
-                huc.setRequestProperty("Content-Type",  "application/json");
-                huc.connect();
-                OutputStreamWriter writer = new OutputStreamWriter(huc.getOutputStream());
-                BufferedReader br = new BufferedReader(new InputStreamReader(huc.getInputStream(),"UTF-8")) ;
-                //HttpURLConnection连接服务器*/
-                HttpURLConnection huc;
-                OutputStreamWriter writer;
-                BufferedReader br;
-                Connection HeartBeatConnection=new Connection("HeartBeat",huc,writer,br);
-
-
+                Connection HeartBeatConnection=new Connection("HeartBeat");
+                //建立一个HttpURLConnection服务器连接
 
                 String ToServerString=ToServer.toString();
-                writer.write(ToServerString);
-                writer.flush();
+                HeartBeatConnection.send(ToServerString);
                 //向服务器发请求
 
-
-
                 String line;
-                while ((line = br.readLine()) != null) {
+                while ((line = HeartBeatConnection.br.readLine()) != null) {
+                    //接受请求结果
                     JSONObject fromServer=new JSONObject(line);
                     String result=fromServer.getString("result");
                     if (result.equals("Success")){
@@ -68,12 +53,9 @@ public class HeartBeat extends Thread {
                         }
                     }
                 }
-                //接受返回结果，并且处理推送
 
-                /*huc.connect();
-                br.close();
+                HeartBeatConnection.drop();
                 //断开连接*/
-                HeartBeatConnection.drop(huc,br);
 
 
             }catch(Exception e){

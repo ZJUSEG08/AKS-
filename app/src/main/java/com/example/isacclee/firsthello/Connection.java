@@ -1,4 +1,6 @@
-package com.example.isacclee.firsthello.WithServer;
+package com.example.isacclee.firsthello;
+
+import org.json.JSONStringer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.lang.String;
 
 /**
  * Created by Pro15 on 17/7/9.
@@ -15,7 +18,11 @@ public class Connection {
 
     public String target="http://localhost:8080";
 
-    public void Connection(String API, HttpURLConnection huc, OutputStreamWriter writer, BufferedReader br){
+    public HttpURLConnection huc;
+    public OutputStreamWriter writer;
+    public BufferedReader br;
+
+    public Connection(String API){
         try {
             URL httpUrl = new URL(target+API);
             huc = (HttpURLConnection) httpUrl.openConnection();
@@ -31,12 +38,21 @@ public class Connection {
         }
     }
 
-    public void drop(HttpURLConnection huc, BufferedReader br) {
+    public void drop() {
         try {
             huc.connect();
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void send(String JsonString){
+        try{
+            writer.write(JsonString);
+            writer.flush();
+        }catch(Exception e) {
+
         }
     }
 }
