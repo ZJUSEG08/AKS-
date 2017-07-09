@@ -28,7 +28,8 @@
         <activity
             android:name=".SignUpActivity"
             android:label="@string/title_activity_sign_up" />
-        <activity android:name=".Connect2PayActivity"></activity>
+        <activity android:name=".Connect2PayActivity" />
+        <activity android:name=".FindPasswdActivity"></activity>
     </application>
 
 </manifest>
