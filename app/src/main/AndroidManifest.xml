@@ -29,7 +29,12 @@
             android:name=".SignUpActivity"
             android:label="@string/title_activity_sign_up" />
         <activity android:name=".Connect2PayActivity" />
-        <activity android:name=".FindPasswdActivity"></activity>
+        <activity android:name=".FindPasswdActivity" />
+        <activity
+            android:name=".NavigationLeftActivity"
+            android:label="@string/title_activity_navigation_left"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".OrderListActivity" />
     </application>
 
 </manifest>
