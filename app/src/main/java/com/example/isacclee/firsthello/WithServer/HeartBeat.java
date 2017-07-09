@@ -7,9 +7,11 @@ import org.json.JSONException;
 import org.json.JSONArray;
 
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.io.*;
 
+//import Connection;im
+
+import com.example.isacclee.
 
 public class HeartBeat extends Thread {
 
@@ -31,7 +33,7 @@ public class HeartBeat extends Thread {
             time-=3000;
 
             try{
-                URL httpUrl = new URL("http://localhost:8080"); //……/HeartBeat
+                /*URL httpUrl = new URL("http://localhost:8080"); //……/HeartBeat
                 HttpURLConnection huc = (HttpURLConnection) httpUrl.openConnection();
                 huc.setRequestMethod("POST");
                 huc.setDoInput(true);
@@ -39,7 +41,13 @@ public class HeartBeat extends Thread {
                 huc.setRequestProperty("Content-Type",  "application/json");
                 huc.connect();
                 OutputStreamWriter writer = new OutputStreamWriter(huc.getOutputStream());
-                //HttpURLConnection连接服务器
+                BufferedReader br = new BufferedReader(new InputStreamReader(huc.getInputStream(),"UTF-8")) ;
+                //HttpURLConnection连接服务器*/
+                HttpURLConnection huc;
+                OutputStreamWriter writer;
+                BufferedReader br;
+                Connection HeartBeatConnection=new Connection("HeartBeat",huc,writer,br);
+
 
 
                 String ToServerString=ToServer.toString();
@@ -48,7 +56,7 @@ public class HeartBeat extends Thread {
                 //向服务器发请求
 
 
-                BufferedReader br = new BufferedReader(new InputStreamReader(huc.getInputStream(),"UTF-8")) ;
+
                 String line;
                 while ((line = br.readLine()) != null) {
                     JSONObject fromServer=new JSONObject(line);
@@ -63,9 +71,10 @@ public class HeartBeat extends Thread {
                 }
                 //接受返回结果，并且处理推送
 
-                huc.connect();
+                /*huc.connect();
                 br.close();
-                //断开连接
+                //断开连接*/
+                HeartBeatConnection.drop(huc,br);
 
 
             }catch(Exception e){
