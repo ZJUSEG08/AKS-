@@ -223,7 +223,7 @@ public class Controller {
                 Device.orderLimit=fromServer.getInt("orderLimit");
             }
             HeartBeatConnection.drop();
-            //断开连接*/
+            //断开连接
         }catch(Exception e){
 
         };
