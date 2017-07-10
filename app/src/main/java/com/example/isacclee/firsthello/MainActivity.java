@@ -1,29 +1,76 @@
 package com.example.isacclee.firsthello;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity {
 
-    public final static String EXTRA_MESSAGE = "com.example.isacclee.MESSAGE";
+    private TextView txt_title;
+    private FrameLayout fl_content;
+    private Context mContext;
+    private ArrayList<Data> datas = null;
+    private FragmentManager fManager = null;
+    private long exitTime = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mContext = MainActivity.this;
+        fManager = getFragmentManager();
+        bindViews();
+
+        datas = new ArrayList<Data>();
+        for (int i = 1; i <= 20; i++) {
+            Data data = new Data("商品名称","配送中",2,i);
+            datas.add(data);
+        }
+//        OrderListFragment olFragment = new OrderListFragment(fManager, datas);
+        OrderListFragment olFragment = OrderListFragment.newInstance(fManager, datas);
+        FragmentTransaction ft = fManager.beginTransaction();
+        ft.replace(R.id.fl_content, olFragment);
+        ft.commit();
     }
 
-    public void sendMessage(View view){
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
-        EditText editText = (EditText) findViewById(R.id.edit_message);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
+
+    private void bindViews() {
+        txt_title = (TextView) findViewById(R.id.order_item_title);
+        fl_content = (FrameLayout) findViewById(R.id.fl_content);
     }
+
+
+    //点击回退键的处理：判断Fragment栈中是否有Fragment
+    //没，双击退出程序，否则像是Toast提示
+    //有，popbackstack弹出栈
+    @Override
+    public void onBackPressed() {
+        if (fManager.getBackStackEntryCount() == 0) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                Toast.makeText(getApplicationContext(), "再按一次退出程序",
+                        Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                super.onBackPressed();
+            }
+        } else {
+            fManager.popBackStack();
+        }
+    }
+
+
 
 }
