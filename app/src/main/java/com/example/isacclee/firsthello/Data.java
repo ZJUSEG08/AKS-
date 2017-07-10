@@ -19,9 +19,9 @@ public class Data {
     public String getGoods_title() {
         return goods_title;
     }
-//    public String getNew_content() {
-//        return new_content;
-//    }
+    public String getOrder_state() {
+        return order_state;
+    }
 //    public void setNew_title(String new_title) {
 //        this.new_title = new_title;
 //    }
