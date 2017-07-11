@@ -1,10 +1,18 @@
 package com.example.isacclee.firsthello;
 
-import org.json.*;
+import android.content.Context;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 /**
  * Created by Pro15 on 17/7/9.
+ * Some methods
  */
 
 public class Controller {
@@ -41,8 +49,8 @@ public class Controller {
             HeartBeatConnection.drop();
             //断开连接*/
         }catch(Exception e){
-
-        };
+            e.printStackTrace();
+        }
         return answer;
     }
 
@@ -76,8 +84,8 @@ public class Controller {
             HeartBeatConnection.drop();
             //断开连接*/
         }catch(Exception e){
-
-        };
+            e.printStackTrace();
+        }
         return answer;
     }
 
@@ -112,8 +120,8 @@ public class Controller {
             HeartBeatConnection.drop();
             //断开连接*/
         }catch(Exception e){
-
-        };
+            e.printStackTrace();
+        }
         return answer;
     }
 
@@ -149,8 +157,8 @@ public class Controller {
             HeartBeatConnection.drop();
             //断开连接*/
         }catch(Exception e){
-
-        };
+            e.printStackTrace();
+        }
         return answer;
     }
 
@@ -189,8 +197,8 @@ public class Controller {
             HeartBeatConnection.drop();
             //断开连接*/
         }catch(Exception e){
-
-        };
+            e.printStackTrace();
+        }
         return answer;
     }
 
@@ -224,8 +232,8 @@ public class Controller {
             HeartBeatConnection.drop();
             //断开连接
         }catch(Exception e){
-
-        };
+            e.printStackTrace();
+        }
     }
 
     public int UpdateDevice(DeviceStructure Device) {
@@ -266,8 +274,8 @@ public class Controller {
             HeartBeatConnection.drop();
             //断开连接*/
         }catch(Exception e){
-
-        };
+            e.printStackTrace();
+        }
         return answer;
     }
 
@@ -301,8 +309,8 @@ public class Controller {
             HeartBeatConnection.drop();
             //断开连接*/
         }catch(Exception e){
-
-        };
+            e.printStackTrace();
+        }
         return answer;
     }
 
@@ -340,8 +348,8 @@ public class Controller {
             HeartBeatConnection.drop();
             //断开连接*/
         }catch(Exception e){
-
-        };
+            e.printStackTrace();
+        }
         return answer;
     }
 
@@ -385,7 +393,85 @@ public class Controller {
             HeartBeatConnection.drop();
             //断开连接*/
         }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
-        };
+    //获取商品列表
+    public int GoodsList(GoodsStructure[] result, Context mContext) {
+        int answer=0;
+
+        try{
+            Connection HeartBeatConnection=new Connection("GoodsList");
+            HeartBeatConnection.send("");
+            String line;
+            while ((line = HeartBeatConnection.br.readLine()) != null) {
+                //接受请求结果
+                JSONObject fromServer=new JSONObject(line);
+                JSONArray goodsList=fromServer.getJSONArray("goodsList");
+                answer=goodsList.length();
+                for (int i=0;i<answer;i++)
+                {
+                    JSONObject goods=goodsList.getJSONObject(i);
+                    result[i].setGoodsID(goods.getString("goodsID"));
+                }
+            }
+            HeartBeatConnection.drop();
+            //断开连接*/
+
+            //与现有的goodsList进行比较
+            FileCacheUtil fileCacheUtil = new FileCacheUtil();
+            if(!fileCacheUtil.cacheIsOutDate(mContext,FileCacheUtil.docCache)){
+                Toast.makeText(mContext,
+                        fileCacheUtil.getCache(mContext,FileCacheUtil.docCache),
+                        Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(mContext,
+                        "setCache",
+                        Toast.LENGTH_SHORT).show();
+                FileCacheUtil.setCache("write now",
+                        mContext,
+                        FileCacheUtil.docCache,
+                        MODE_PRIVATE);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return answer;
+    }
+
+    //获取商品信息
+    public void GoodsInfo(GoodsStructure[] goods) {
+        String ToServerString=null;
+        JSONObject ToServer = new JSONObject();
+        try {
+            ToServer.put("goodsList", GoodsStructure.getGoodsList());
+            ToServerString = ToServer.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try{
+            Connection HeartBeatConnection=new Connection("OrderInfo");
+            HeartBeatConnection.send(ToServerString);
+            String line;
+            while ((line = HeartBeatConnection.br.readLine()) != null) {
+                //接受请求结果
+                JSONObject fromServer=new JSONObject(line);
+                JSONArray goodsList = fromServer.getJSONArray("goodList");
+                for (int i = 0; i < goodsList.length(); i++){
+                    JSONObject oneGoods=goodsList.getJSONObject(i);
+                    goods[i].setGoodsID(oneGoods.getString("goodsID"));
+                    goods[i].setGoodsName(oneGoods.getString("name"));
+                    goods[i].setDescription(oneGoods.getString("description"));
+                    goods[i].setPrice(oneGoods.getDouble("price"));
+                    goods[i].setPicture(oneGoods.getString("picture"));
+                }
+            }
+            HeartBeatConnection.drop();
+            //断开连接*/
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
