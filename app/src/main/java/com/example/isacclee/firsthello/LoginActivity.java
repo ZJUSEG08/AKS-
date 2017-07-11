@@ -110,7 +110,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         intent.setClass(LoginActivity.this,SignUpActivity.class );
 
         startActivity(intent);
-        finish();
     };
 
     protected void JumpToForget(){
@@ -118,7 +117,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         intent.setClass(LoginActivity.this,FindPasswdActivity.class );
 
         startActivity(intent);
-        finish();
     };
 
     private void populateAutoComplete() {
