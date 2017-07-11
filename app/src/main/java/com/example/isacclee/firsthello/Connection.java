@@ -1,7 +1,5 @@
 package com.example.isacclee.firsthello;
 
-import org.json.JSONStringer;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

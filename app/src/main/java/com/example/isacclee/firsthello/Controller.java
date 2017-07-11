@@ -3,7 +3,6 @@ package com.example.isacclee.firsthello;
 import org.json.*;
 
 
-
 /**
  * Created by Pro15 on 17/7/9.
  */
@@ -252,6 +251,41 @@ public class Controller {
 
         try{
             Connection HeartBeatConnection=new Connection("UpdateDevice");
+            HeartBeatConnection.send(ToServerString);
+            String line;
+            while ((line = HeartBeatConnection.br.readLine()) != null) {
+                //接受请求结果
+                JSONObject fromServer=new JSONObject(line);
+                String result=fromServer.getString("result");
+                if (result.equals("Y")){
+                    answer=1;
+                }else{
+                    answer=0;
+                }
+            }
+            HeartBeatConnection.drop();
+            //断开连接*/
+        }catch(Exception e){
+
+        };
+        return answer;
+    }
+
+    public int ResetDevice(String aksID) {
+
+        String ToServerString=null;
+        JSONObject ToServer = new JSONObject();
+        int answer=0;
+        try {
+            ToServer.put("aksID", aksID);
+            ToServerString = ToServer.toString();
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        try{
+            Connection HeartBeatConnection=new Connection("ResetDevice");
             HeartBeatConnection.send(ToServerString);
             String line;
             while ((line = HeartBeatConnection.br.readLine()) != null) {
