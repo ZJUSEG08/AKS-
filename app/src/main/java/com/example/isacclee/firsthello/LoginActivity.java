@@ -87,10 +87,39 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 attemptLogin();
             }
         });
-
+        Button mEmailSignUpButton = (Button) findViewById(R.id.email_sign_up_button);
+        mEmailSignUpButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                JumpToSignUp();
+            }
+        });
+        Button mEmailForgetPasswordButton = (Button) findViewById(R.id.forget_password_button);
+        mEmailForgetPasswordButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                JumpToForget();
+            }
+        });
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
+
+    protected void JumpToSignUp(){
+        Intent intent = new Intent();
+        intent.setClass(LoginActivity.this,SignUpActivity.class );
+
+        startActivity(intent);
+        finish();
+    };
+
+    protected void JumpToForget(){
+        Intent intent = new Intent();
+        intent.setClass(LoginActivity.this,FindPasswdActivity.class );
+
+        startActivity(intent);
+        finish();
+    };
 
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
@@ -313,42 +342,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
             return true;
 //            Controller a = new Controller();
 //            int re = a.SignIn(mEmail,mPassword);
 //            if(re == 1)
 //                return true;
 //            else return false;
-            // TODO: register the new account here.
         }
 
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
+                @Override
+                protected void onPostExecute(final Boolean success) {
+                    mAuthTask = null;
+                    showProgress(false);
 
-            if (success) {
-                Intent intent = new Intent();
-                intent.setClass(LoginActivity.this,MainActivity.class );
+                    if (success) {
+                        Intent intent = new Intent();
+                        intent.setClass(LoginActivity.this,MainActivity.class );
 
-                EditText thisEmail = (EditText)findViewById(R.id.email);
-                String ThisName = thisEmail.getText().toString();
-                Bundle bundle=new Bundle();
-                bundle.putString("email",LoginActivity.this.email);
-                bundle.putString("password",LoginActivity.this.password);
-                intent.putExtras(bundle);
-                System.out.println(bundle);
-                intent.putExtra("thisName",ThisName);
+                        EditText thisEmail = (EditText)findViewById(R.id.email);
+                        String ThisName = thisEmail.getText().toString();
+                        Bundle bundle=new Bundle();
+                        bundle.putString("email",LoginActivity.this.email);
+                        bundle.putString("password",LoginActivity.this.password);
+                        intent.putExtras(bundle);
+                        System.out.println(bundle);
+                        intent.putExtra("thisName",ThisName);
 
-                startActivity(intent);
-                finish();
+                        startActivity(intent);
+                        finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

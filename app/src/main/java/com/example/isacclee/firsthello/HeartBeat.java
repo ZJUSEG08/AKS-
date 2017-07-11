@@ -65,7 +65,7 @@ public class HeartBeat extends Thread {
         NotificationManager manager =(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(NOTIFICATION_FLAG, notify);*/
 
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//        NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
 
     }
