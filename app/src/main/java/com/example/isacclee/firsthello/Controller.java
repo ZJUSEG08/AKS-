@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -398,7 +400,7 @@ public class Controller {
     }
 
     //获取商品列表
-    public int GoodsList(GoodsStructure[] result, Context mContext) {
+    public int GoodsList(ArrayList<String> result, Context mContext) {
         int answer=0;
 
         try{
@@ -413,7 +415,7 @@ public class Controller {
                 for (int i=0;i<answer;i++)
                 {
                     JSONObject goods=goodsList.getJSONObject(i);
-                    result[i].setGoodsID(goods.getString("goodsID"));
+                    result.add(goods.getString("goodsID"));
                 }
             }
             HeartBeatConnection.drop();
@@ -421,19 +423,44 @@ public class Controller {
 
             //与现有的goodsList进行比较
             FileCacheUtil fileCacheUtil = new FileCacheUtil();
+            ArrayList<String> cacheFile = new ArrayList<>();
             if(!fileCacheUtil.cacheIsOutDate(mContext,FileCacheUtil.docCache)){
-                Toast.makeText(mContext,
-                        fileCacheUtil.getCache(mContext,FileCacheUtil.docCache),
-                        Toast.LENGTH_SHORT).show();
+                //如果缓存中数据存在而且没有过期，获取并解析JSON生成对象
+                String Cache = fileCacheUtil.getCache(mContext,FileCacheUtil.docCache);
+                Toast.makeText(mContext, Cache, Toast.LENGTH_SHORT).show();
+                JSONObject goodsObjectInCache = new JSONObject(Cache);
+                JSONArray goodsListInCache = goodsObjectInCache.getJSONArray("goodsList");
+                for (int i = 0; i< goodsListInCache.length(); i++){
+                    JSONObject goodsInCache = goodsListInCache.getJSONObject(i);
+                    cacheFile.add(goodsInCache.getString("goodsID"));
+                }
+
+                //比较result与cacheFile，结果放到GoodsStructure
+                GoodsStructure.clearGoodsList();
+                for (String itemInResult: result) {
+                    if(!cacheFile.contains(itemInResult)){
+                        GoodsStructure.addGoodsList(itemInResult);
+                    }
+                }
             }else{
-                Toast.makeText(mContext,
-                        "setCache",
-                        Toast.LENGTH_SHORT).show();
-                FileCacheUtil.setCache("write now",
-                        mContext,
-                        FileCacheUtil.docCache,
-                        MODE_PRIVATE);
+                //数据过期，清空重新写入
+                GoodsStructure.clearGoodsList();
+                for (String itemInResult: result) {
+                    GoodsStructure.addGoodsList(itemInResult);
+                }
             }
+
+            //设置缓存
+            JSONArray newCache = new JSONArray();
+            for (String newItem:GoodsStructure.getGoodsList()){
+                JSONObject json = new JSONObject();
+                json.put("goodsID",newItem);
+                newCache.put(json);
+            }
+            FileCacheUtil.setCache(newCache.toString(),
+                    mContext,
+                    FileCacheUtil.docCache,
+                    MODE_PRIVATE);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -441,15 +468,14 @@ public class Controller {
     }
 
     //获取商品信息
-    public void GoodsInfo(GoodsStructure[] goods) {
-        String ToServerString=null;
-        JSONObject ToServer = new JSONObject();
-        try {
-            ToServer.put("goodsList", GoodsStructure.getGoodsList());
-            ToServerString = ToServer.toString();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    public void GoodsInfo(GoodsStructure[] goods, Context mContext) {
+        String ToServerString;
+        FileCacheUtil fileCacheUtil = new FileCacheUtil();
+
+        //读取缓存
+        //前面设置缓存的时候写入的就是JSON字符串，
+        //这里读取的时候应该就不用再转换了
+        ToServerString = fileCacheUtil.getCache(mContext,FileCacheUtil.docCache);
 
         try{
             Connection HeartBeatConnection=new Connection("OrderInfo");

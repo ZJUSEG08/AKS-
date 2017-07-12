@@ -40,7 +40,7 @@ class FileCacheUtil {
         }
     }
 
-    //读取缓存，返回字符串（JSON）
+    //读取缓存，返回字符串
     String getCache(Context context, String cacheFileName) {
         FileInputStream fis = null;
         StringBuilder sBuf = new StringBuilder();

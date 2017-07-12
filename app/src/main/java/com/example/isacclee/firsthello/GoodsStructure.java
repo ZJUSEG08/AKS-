@@ -1,5 +1,7 @@
 package com.example.isacclee.firsthello;
 
+import java.util.ArrayList;
+
 /**
  * Created by Swallow on 2017/7/11.
  * Just structure.
@@ -11,13 +13,9 @@ class GoodsStructure {
     private String description;
     private Double price;
     private String picture;
+    private static ArrayList<String> goodsList;
 
-    private class newGoods{
-        public String goodsID;
-    }
-    private static newGoods[] goodsList;
-
-    static newGoods[] getGoodsList() {
+    static ArrayList<String> getGoodsList() {
         return goodsList;
     }
 
@@ -49,8 +47,16 @@ class GoodsStructure {
         this.goodsID = goodsID;
     }
 
-    public static void setGoodsList(newGoods[] goodsList) {
+    public static void setGoodsList(ArrayList<String> goodsList) {
         GoodsStructure.goodsList = goodsList;
+    }
+
+    static void clearGoodsList(){
+        GoodsStructure.goodsList.clear();
+    }
+
+    static void addGoodsList(String goodsID){
+        GoodsStructure.goodsList.add(goodsID);
     }
 
     void setGoodsName(String goodsName) {
