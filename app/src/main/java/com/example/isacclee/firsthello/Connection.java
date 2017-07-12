@@ -14,7 +14,7 @@ import java.lang.String;
 
 public class Connection {
 
-    public String target="http://localhost:8080";
+    public String target="http://123.207.218.103/AKS+/";
 
     public HttpURLConnection huc;
     public OutputStreamWriter writer;

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class OrderListFragment extends Fragment implements AdapterView.OnItemClickListener{
     private FragmentManager fManager;
-    private ArrayList<Data> datas;
+    private ArrayList<OrderStructure> datas;
     private ListView list_orders;
 
     public OrderListFragment() {
@@ -29,7 +29,7 @@ public class OrderListFragment extends Fragment implements AdapterView.OnItemCli
 //        this.fManager = fManager;
 //        this.datas = datas;
 //    }
-    public static OrderListFragment newInstance(FragmentManager fManager, ArrayList<Data> datas){
+    public static OrderListFragment newInstance(FragmentManager fManager, ArrayList<OrderStructure> datas){
         OrderListFragment f = new OrderListFragment();
         f.fManager = fManager;
         f.datas = datas;

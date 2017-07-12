@@ -14,11 +14,11 @@ import java.util.List;
  */
 
 public class MyAdapter extends BaseAdapter{
-    private List<Data> mData;
+    private List<OrderStructure> mData;
 
     private Context mContext;
 
-    public MyAdapter(List<Data> mData, Context mContext) {
+    public MyAdapter(List<OrderStructure> mData, Context mContext) {
         this.mData = mData;
         this.mContext = mContext;
     }

@@ -319,18 +319,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // TODO: attempt authentication against a network service.
 
             try {
-                // Simulate network access.
+                Controller controller = new Controller();
                 Thread.sleep(2000);
+                int re = controller.SignIn(mEmail,mPassword);
+                if(re == 1)
+                    return true;
+                else return false;
             } catch (InterruptedException e) {
                 return false;
             }
 
-            return true;
-//            Controller a = new Controller();
-//            int re = a.SignIn(mEmail,mPassword);
-//            if(re == 1)
-//                return true;
-//            else return false;
+
         }
 
                 @Override

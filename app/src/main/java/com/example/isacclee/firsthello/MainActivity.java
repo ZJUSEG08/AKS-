@@ -28,12 +28,14 @@ public class MainActivity extends AppCompatActivity
     private TextView txt_title;
     private FrameLayout fl_content;
     private Context mContext;
-    private ArrayList<Data> datas = null;
+    private ArrayList<OrderStructure> datas = null;
     private FragmentManager fManager = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        Controller controller = new Controller();
+        OrderStructure orderStructure = new OrderStructure();
         //set view
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -64,11 +66,9 @@ public class MainActivity extends AppCompatActivity
         fManager = getFragmentManager();
         bindViews();
 
-        datas = new ArrayList<Data>();
-        for (int i = 1; i <= 20; i++) {
-            Data data = new Data("商品名称","配送中",2,i);
-            datas.add(data);
-        }
+
+
+        int count = controller.OrderList(email,datas);
 //        OrderListFragment olFragment = new OrderListFragment(fManager, datas);
         OrderListFragment olFragment = OrderListFragment.newInstance(fManager, datas);
         FragmentTransaction ft = fManager.beginTransaction();
