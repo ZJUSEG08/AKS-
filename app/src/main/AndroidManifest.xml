@@ -14,27 +14,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".SignUpActivity"
             android:label="@string/title_activity_sign_up" />
         <activity android:name=".Connect2PayActivity" />
         <activity android:name=".FindPasswdActivity" />
-        <activity
-            android:name=".NavigationLeftActivity"
-            android:label="@string/title_activity_navigation_left"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SearchActivity" />
-        <activity android:name=".PersonInfoActivity" />
-        <activity android:name=".EditPersonActivity"></activity>
+        <activity android:name=".SearchActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".PersonInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".EditPersonActivity" />
     </application>
 
 </manifest>

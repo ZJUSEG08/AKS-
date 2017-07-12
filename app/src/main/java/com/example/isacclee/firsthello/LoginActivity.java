@@ -43,11 +43,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private static final int REQUEST_READ_CONTACTS = 0;
 
-
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
-
     private UserLoginTask mAuthTask = null;
 
     // UI references.
@@ -69,16 +64,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -107,14 +92,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     protected void JumpToSignUp(){
         Intent intent = new Intent();
-        intent.setClass(LoginActivity.this,SignUpActivity.class );
+        intent.setClass(LoginActivity.this,SignUpActivity.class);
 
         startActivity(intent);
     };
 
     protected void JumpToForget(){
         Intent intent = new Intent();
-        intent.setClass(LoginActivity.this,FindPasswdActivity.class );
+        intent.setClass(LoginActivity.this,FindPasswdActivity.class);
 
         startActivity(intent);
     };
