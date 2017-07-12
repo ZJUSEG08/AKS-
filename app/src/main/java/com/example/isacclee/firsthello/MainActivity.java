@@ -50,6 +50,15 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        String email = new String("LGD");
+//        email = getEmail();
+        navigationView.setNavigationItemSelectedListener(this);
+        View header = navigationView.inflateHeaderView(R.layout.nav_header_main);
+
+        txt_title = (TextView) header.findViewById(R.id.email_name);
+        txt_title.setText(email);
+
+
         //list part
         mContext = MainActivity.this;
         fManager = getFragmentManager();

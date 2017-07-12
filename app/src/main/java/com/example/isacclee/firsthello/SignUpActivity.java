@@ -63,7 +63,7 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-
+    private AutoCompleteTextView TelView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +84,7 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
             }
         });
 
+        TelView = (AutoCompleteTextView) findViewById(R.id.tel2);
         Button mEmailSignUpButton = (Button) findViewById(R.id.email_sign_up_button);
         mEmailSignUpButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -153,11 +154,13 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
-
+        TelView.setError(null);
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
+        String tel= TelView.getText().toString();
 
+        Controller control =new Controller();
         boolean cancel = false;
         View focusView = null;
 
@@ -177,8 +180,14 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
+        }else {
+            focusView= TelView;
         }
 
+        int result = control.SignUp(email,password,tel);
+        if(result == 0){
+            cancel = true;
+        }
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -191,8 +200,8 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+            Toast.makeText(this,"注册成功",Toast.LENGTH_LONG).show();
         }
-        Toast.makeText(this,"注册成功",Toast.LENGTH_LONG).show();
     }
 
     private boolean isEmailValid(String email) {

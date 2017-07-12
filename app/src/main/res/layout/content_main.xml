@@ -17,10 +17,14 @@
         android:text="订单列表"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:gravity="center"/>
+        android:gravity="center"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp" />
     <FrameLayout
         android:id="@+id/fl_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/order_list_title" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_below="@id/order_list_title"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp" />
 </android.support.constraint.ConstraintLayout>
