@@ -30,7 +30,6 @@ public class Connection {
             huc.setRequestProperty("Content-Type", "application/json");
             huc.connect();
             writer = new OutputStreamWriter(huc.getOutputStream());
-            br = new BufferedReader(new InputStreamReader(huc.getInputStream(), "UTF-8"));
         }catch(Exception e){
 
         }
@@ -49,8 +48,13 @@ public class Connection {
         try{
             writer.write(JsonString);
             writer.flush();
+            br = new BufferedReader(new InputStreamReader(huc.getInputStream(), "UTF-8"));
         }catch(Exception e) {
 
         }
+    }
+
+    BufferedReader getBr(){
+        return br;
     }
 }

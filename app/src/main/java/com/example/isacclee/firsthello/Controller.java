@@ -35,21 +35,14 @@ public class Controller {
         }
 
         try{
-            Connection HeartBeatConnection=new Connection("SignUp");
-            HeartBeatConnection.send(ToServerString);
-            String line;
-            while ((line = HeartBeatConnection.br.readLine()) != null) {
-                //接受请求结果
-                JSONObject fromServer=new JSONObject(line);
-                String result=fromServer.getString("result");
-                if (result.equals("Y")){
-                    answer=1;
-                }else{
-                    answer=0;
-                }
+            String line=new Bridge().Connect("SignUp",ToServerString);
+            JSONObject fromServer=new JSONObject(line);
+            String result=fromServer.getString("result");
+            if (result.equals("Y")){
+                answer=1;
+            }else{
+                answer=0;
             }
-            HeartBeatConnection.drop();
-            //断开连接*/
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -70,11 +63,7 @@ public class Controller {
         }
 
         try{
-            Connection HeartBeatConnection=new Connection("ForgetPassword");
-            HeartBeatConnection.send(ToServerString);
-            String line;
-            while ((line = HeartBeatConnection.br.readLine()) != null) {
-                //接受请求结果
+            String line=new Bridge().Connect("ForgetPassword",ToServerString);
                 JSONObject fromServer=new JSONObject(line);
                 String result=fromServer.getString("result");
                 if (result.equals("Y")){
@@ -82,9 +71,6 @@ public class Controller {
                 }else{
                     answer=0;
                 }
-            }
-            HeartBeatConnection.drop();
-            //断开连接*/
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -106,10 +92,7 @@ public class Controller {
         }
 
         try{
-            Connection HeartBeatConnection=new Connection("SignIn");
-            HeartBeatConnection.send(ToServerString);
-            String line;
-            while ((line = HeartBeatConnection.br.readLine()) != null) {
+            String line=new Bridge().Connect("SignIn",ToServerString);
                 //接受请求结果
                 JSONObject fromServer=new JSONObject(line);
                 String result=fromServer.getString("result");
@@ -118,9 +101,6 @@ public class Controller {
                 }else{
                     answer=0;
                 }
-            }
-            HeartBeatConnection.drop();
-            //断开连接*/
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -143,11 +123,7 @@ public class Controller {
         }
 
         try{
-            Connection HeartBeatConnection=new Connection("EditInfo");
-            HeartBeatConnection.send(ToServerString);
-            String line;
-            while ((line = HeartBeatConnection.br.readLine()) != null) {
-                //接受请求结果
+            String line=new Bridge().Connect("EditInfo",ToServerString);
                 JSONObject fromServer=new JSONObject(line);
                 String result=fromServer.getString("result");
                 if (result.equals("Y")){
@@ -155,9 +131,6 @@ public class Controller {
                 }else{
                     answer=0;
                 }
-            }
-            HeartBeatConnection.drop();
-            //断开连接*/
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -179,10 +152,7 @@ public class Controller {
         }
 
         try{
-            Connection HeartBeatConnection=new Connection("CheckDevice");
-            HeartBeatConnection.send(ToServerString);
-            String line;
-            while ((line = HeartBeatConnection.br.readLine()) != null) {
+            String line=new Bridge().Connect("CheckDevice",ToServerString);
                 //接受请求结果
                 JSONObject fromServer=new JSONObject(line);
                 String state=fromServer.getString("state");
@@ -195,10 +165,8 @@ public class Controller {
                         answer=0;
                     }
                 }
-            }
-            HeartBeatConnection.drop();
-            //断开连接*/
-        }catch(Exception e){
+
+            }catch(Exception e){
             e.printStackTrace();
         }
         return answer;
@@ -217,10 +185,7 @@ public class Controller {
         }
 
         try{
-            Connection HeartBeatConnection=new Connection("GetDevice");
-            HeartBeatConnection.send(ToServerString);
-            String line;
-            while ((line = HeartBeatConnection.br.readLine()) != null) {
+            String line=new Bridge().Connect("GetDevice",ToServerString);
                 //接受请求结果
                 JSONObject fromServer=new JSONObject(line);
                 Device.goodsID=fromServer.getString("goodsID");
@@ -230,9 +195,8 @@ public class Controller {
                 Device.postCode=fromServer.getString("postCode");
                 Device.phone=fromServer.getString("phone");
                 Device.orderLimit=fromServer.getInt("orderLimit");
-            }
-            HeartBeatConnection.drop();
-            //断开连接
+
+
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -260,10 +224,7 @@ public class Controller {
         }
 
         try{
-            Connection HeartBeatConnection=new Connection("UpdateDevice");
-            HeartBeatConnection.send(ToServerString);
-            String line;
-            while ((line = HeartBeatConnection.br.readLine()) != null) {
+            String line=new Bridge().Connect("UpdateDevice",ToServerString);
                 //接受请求结果
                 JSONObject fromServer=new JSONObject(line);
                 String result=fromServer.getString("result");
@@ -272,9 +233,7 @@ public class Controller {
                 }else{
                     answer=0;
                 }
-            }
-            HeartBeatConnection.drop();
-            //断开连接*/
+
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -295,10 +254,7 @@ public class Controller {
         }
 
         try{
-            Connection HeartBeatConnection=new Connection("ResetDevice");
-            HeartBeatConnection.send(ToServerString);
-            String line;
-            while ((line = HeartBeatConnection.br.readLine()) != null) {
+            String line=new Bridge().Connect("ResetDevice",ToServerString);
                 //接受请求结果
                 JSONObject fromServer=new JSONObject(line);
                 String result=fromServer.getString("result");
@@ -307,9 +263,7 @@ public class Controller {
                 }else{
                     answer=0;
                 }
-            }
-            HeartBeatConnection.drop();
-            //断开连接*/
+
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -330,10 +284,7 @@ public class Controller {
         }
 
         try{
-            Connection HeartBeatConnection=new Connection("OrderList");
-            HeartBeatConnection.send(ToServerString);
-            String line;
-            while ((line = HeartBeatConnection.br.readLine()) != null) {
+            String line=new Bridge().Connect("OrderList",ToServerString);
                 //接受请求结果
                 JSONObject fromServer=new JSONObject(line);
                 JSONArray orderList=fromServer.getJSONArray("orderList");
@@ -346,8 +297,7 @@ public class Controller {
                     result[i].number=order.getInt("number");
                     result[i].state=order.getString("state");
                 }
-            }
-            HeartBeatConnection.drop();
+
             //断开连接*/
         }catch(Exception e){
             e.printStackTrace();
@@ -368,10 +318,7 @@ public class Controller {
         }
 
         try{
-            Connection HeartBeatConnection=new Connection("OrderInfo");
-            HeartBeatConnection.send(ToServerString);
-            String line;
-            while ((line = HeartBeatConnection.br.readLine()) != null) {
+            String line=new Bridge().Connect("OrderInfo",ToServerString);
                 //接受请求结果
                 JSONObject fromServer=new JSONObject(line);
                 order.goodsID=fromServer.getString("goodsID");
@@ -391,9 +338,7 @@ public class Controller {
                     order.statesList[i].time=state.getString("time");
                     order.statesList[i].state=state.getString("state");
                 }
-            }
-            HeartBeatConnection.drop();
-            //断开连接*/
+
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -404,10 +349,7 @@ public class Controller {
         int answer=0;
 
         try{
-            Connection HeartBeatConnection=new Connection("GoodsList");
-            HeartBeatConnection.send("");
-            String line;
-            while ((line = HeartBeatConnection.br.readLine()) != null) {
+            String line=new Bridge().Connect("GoodsList","");
                 //接受请求结果
                 JSONObject fromServer=new JSONObject(line);
                 JSONArray goodsList=fromServer.getJSONArray("goodsList");
@@ -417,9 +359,6 @@ public class Controller {
                     JSONObject goods=goodsList.getJSONObject(i);
                     result.add(goods.getString("goodsID"));
                 }
-            }
-            HeartBeatConnection.drop();
-            //断开连接*/
 
             //与现有的goodsList进行比较
             FileCacheUtil fileCacheUtil = new FileCacheUtil();
@@ -478,10 +417,7 @@ public class Controller {
         ToServerString = fileCacheUtil.getCache(mContext,FileCacheUtil.docCache);
 
         try{
-            Connection HeartBeatConnection=new Connection("OrderInfo");
-            HeartBeatConnection.send(ToServerString);
-            String line;
-            while ((line = HeartBeatConnection.br.readLine()) != null) {
+            String line=new Bridge().Connect("GoodsInfo",ToServerString);
                 //接受请求结果
                 JSONObject fromServer=new JSONObject(line);
                 JSONArray goodsList = fromServer.getJSONArray("goodList");
@@ -493,9 +429,7 @@ public class Controller {
                     goods[i].setPrice(oneGoods.getDouble("price"));
                     goods[i].setPicture(oneGoods.getString("picture"));
                 }
-            }
-            HeartBeatConnection.drop();
-            //断开连接*/
+
         }catch(Exception e){
             e.printStackTrace();
         }
