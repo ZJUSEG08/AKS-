@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity
     private Context mContext;
     private ArrayList<OrderStructure> datas = null;
     private FragmentManager fManager = null;
+    private long exitTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +54,11 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //email part
         String email = new String("LGD");
 //        email = getEmail();
         navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.inflateHeaderView(R.layout.nav_header_main);
-
         txt_title = (TextView) header.findViewById(R.id.email_name);
         txt_title.setText(email);
 
@@ -66,13 +68,11 @@ public class MainActivity extends AppCompatActivity
         fManager = getFragmentManager();
         bindViews();
 
-
-
         int count = controller.OrderList(email,datas);
 //        OrderListFragment olFragment = new OrderListFragment(fManager, datas);
         OrderListFragment olFragment = OrderListFragment.newInstance(fManager, datas);
         FragmentTransaction ft = fManager.beginTransaction();
-        ft.replace(R.id.fl_content, olFragment);
+        ft.replace(R.id.fl_content, olFragment);//这里搞不好会找不到这个类,Mark 一下
         ft.commit();
     }
 
@@ -86,8 +86,17 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (fManager.getBackStackEntryCount() == 0) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                Toast.makeText(getApplicationContext(), "再按一次退出程序",
+                        Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                super.onBackPressed();
+            }
         } else {
-            super.onBackPressed();
+            fManager.popBackStack();
+            txt_title.setText("订单列表");
         }
     }
 

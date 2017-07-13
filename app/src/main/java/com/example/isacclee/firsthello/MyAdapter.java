@@ -45,7 +45,7 @@ public class MyAdapter extends BaseAdapter{
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.order_item_title.setText(mData.get(position).getGoods_title());
+        viewHolder.order_item_title.setText(mData.get(position).orderID);
         return convertView;
     }
     private class ViewHolder{
