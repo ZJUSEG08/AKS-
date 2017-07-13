@@ -23,9 +23,17 @@ public class OrderInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_order_info, container, false);
-        TextView txt_content = (TextView) view.findViewById(R.id.order_info);
+        TextView name = (TextView) view.findViewById(R.id.textView15);
+        TextView price = (TextView) view.findViewById(R.id.textView16);
+        TextView orderInfo = (TextView) view.findViewById(R.id.order_info);
+        TextView expressState = (TextView) view.findViewById(R.id.express_state);
+        TextView expressID = (TextView) view.findViewById(R.id.expressid);
         //getArgument获取传递过来的Bundle对象
-        txt_content.setText(getArguments().getString("state"));
+        name.setText(getArguments().getString("name"));
+        orderInfo.setText(getArguments().getString("OrderInfo"));
+        price.setText(getArguments().getString("price"));
+        expressID.setText(getArguments().getString("ExpressID"));
+        expressState.setText(getArguments().getString("ExpressState"));
         return view;
     }
 
