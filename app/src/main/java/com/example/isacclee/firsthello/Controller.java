@@ -347,8 +347,11 @@ public class Controller {
         }
     }
 
-    //获取商品列表
-    public void GoodsList(final Context mContext) {
+    /**
+     * 获取商品列表，新的商品ID将用于获取商品信息
+     * @param mContext 上下文环境，这里一般来说就是调用方法的环境，this即可
+     */
+    private void GoodsList(final Context mContext) {
         /*
          * 网络操作相关的子线程
          */
@@ -364,7 +367,7 @@ public class Controller {
                     //接受请求结果
                     String line;
                     String jsonStr = "";
-                    while ((line = HeartBeatConnection.br.readLine()) != null) {
+                    while ((line = HeartBeatConnection.getBr().readLine()) != null) {
                         //接受请求结果
                         jsonStr += line;
                     }
@@ -427,7 +430,7 @@ public class Controller {
                     //将商品信息保存在本地
                     FileCacheUtil.setCache(jsonStr,
                             mContext,
-                            FileCacheUtil.docCache,
+                            FileCacheUtil.goodsFile,
                             MODE_PRIVATE);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -437,23 +440,55 @@ public class Controller {
         new Thread(networkTask).start();
     }
 
-    //获取商品信息
-    public void GoodsInfo(String goodsID) {
-        try{
-//            String line=new Bridge().Connect("GoodsInfo",ToServerString);
-//                //接受请求结果
-//                JSONObject fromServer=new JSONObject(line);
-//                JSONArray goodsList = fromServer.getJSONArray("goodList");
-//                for (int i = 0; i < goodsList.length(); i++){
-//                    JSONObject oneGoods=goodsList.getJSONObject(i);
-//                    goods[i].setGoodsID(oneGoods.getString("goodsID"));
-//                    goods[i].setGoodsName(oneGoods.getString("name"));
-//                    goods[i].setDescription(oneGoods.getString("description"));
-//                    goods[i].setPrice(oneGoods.getDouble("price"));
-//                    goods[i].setPicture(oneGoods.getString("picture"));
-//                }
-        }catch(Exception e){
+    /**
+     * 获取商品信息
+     * @param mContext 上下文环境，这里一般来说就是调用方法的环境，this即可
+     * @param goodsID 物品ID，用于搜索
+     * @return 返回值是GoodStructure结构的result
+     */
+    private GoodsStructure GoodsInfo(Context mContext, String goodsID) {
+        //从缓存中获取商品信息
+        FileCacheUtil fileCacheUtil = new FileCacheUtil();
+        if (fileCacheUtil.cacheIsOutDate(mContext, FileCacheUtil.goodsFile)) {
+            GoodsList(mContext);
+        }
+
+        String fileCache = fileCacheUtil.getCache(mContext, FileCacheUtil.goodsFile);
+        GoodsStructure result = new GoodsStructure();
+        try {
+            JSONObject goodsObjectInCache = new JSONObject(fileCache);
+            /*
+            * data={goodsList : [{goodsID : string ,
+                                  name : string ,
+                                  description : string ,
+                                  price : float ,
+                                  picture : url}]
+                   }
+            **/
+            JSONArray goodsListInCache = goodsObjectInCache.getJSONArray("goodsList");
+            int i;
+            for (i = 0; i < goodsListInCache.length(); i++) {
+                JSONObject goodsInCache = goodsListInCache.getJSONObject(i);
+                if (goodsInCache.getString("goodsID").equals(goodsID)){
+                    result.setGoodsID(goodsInCache.getString("goodsID"));
+                    result.setGoodsName(goodsInCache.getString("name"));
+                    result.setDescription(goodsInCache.getString("description"));
+                    result.setPrice(goodsInCache.getDouble("price"));
+                    result.setPicture(goodsInCache.getString("picture"));
+                    break;
+                }
+            }
+            if(i == goodsListInCache.length()){
+                if (i==0){
+                    result.setGoodsName("No goods in Cache");
+                }else {
+                    result.setGoodsName("Not found in Cache");
+                }
+            }
+        } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        return result;
     }
 }
