@@ -31,7 +31,7 @@ public class Connection {
             huc.connect();
             writer = new OutputStreamWriter(huc.getOutputStream());
         }catch(Exception e){
-
+            e.printStackTrace();
         }
     }
 
@@ -50,7 +50,7 @@ public class Connection {
             writer.flush();
             br = new BufferedReader(new InputStreamReader(huc.getInputStream(), "UTF-8"));
         }catch(Exception e) {
-
+            e.printStackTrace();
         }
     }
 

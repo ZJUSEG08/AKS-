@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 public class Bridge {
 
-    String jsonStr = "";
+    String jsonStr;
 
     public String Connect(final String API, final String JsonString) {
 
@@ -37,9 +37,10 @@ public class Bridge {
                 // 在这里进行 http request.网络请求相关操作
 
                 try {
-                    Connection makeOrderConnection = new Connection(API);
+                    Connection makeOrderConnection = new Connection(API + "/");
                     makeOrderConnection.send(JsonString);
                     String AChar;
+                    jsonStr = "";
                     while ((AChar = makeOrderConnection.getBr().readLine()) != null) {
                         //接受请求结果
                         jsonStr += AChar;

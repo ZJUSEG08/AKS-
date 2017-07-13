@@ -14,7 +14,8 @@ import java.io.IOException;
 
 class FileCacheUtil {
     //定义缓存文件的名字，方便外部调用
-    static final String docCache = "docs_cache.txt";//缓存文件
+    static final String docCache = "docs_cache.txt";//缓存文件 goodsID
+    static final String goodsFile = "goodsFile.txt";
     //缓存超时时间
     private static final int CACHE_SHORT_TIMEOUT=1000 * 60 * 5; // 5 分钟
 
