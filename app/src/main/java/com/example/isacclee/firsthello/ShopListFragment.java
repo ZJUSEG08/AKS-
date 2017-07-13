@@ -16,8 +16,8 @@ import java.util.ArrayList;
 
 public class ShopListFragment extends Fragment implements AdapterView.OnItemClickListener{
     private FragmentManager fManager;
-    private ArrayList<OrderStructure> datas;
-    private ListView list_orders;
+    private ArrayList<GoodsStructure> datas;
+    private ListView list_shops;
 
     public ShopListFragment() {
         // Required empty public constructor
@@ -26,7 +26,7 @@ public class ShopListFragment extends Fragment implements AdapterView.OnItemClic
 //        this.fManager = fManager;
 //        this.datas = datas;
 //    }
-    public static ShopListFragment newInstance(FragmentManager fManager, ArrayList<OrderStructure> datas){
+    public static ShopListFragment newInstance(FragmentManager fManager, ArrayList<GoodsStructure> datas){
         ShopListFragment f = new ShopListFragment();
         f.fManager = fManager;
         f.datas = datas;
@@ -34,17 +34,17 @@ public class ShopListFragment extends Fragment implements AdapterView.OnItemClic
     }
 
     private void initViews(View view){
-        list_orders = view.findViewById(R.id.list_order);
+        list_shops = view.findViewById(R.id.list_shops);
         Bundle bundle = getArguments();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order_list, container, false);
-        list_orders = (ListView) view.findViewById(R.id.list_order);
-        MyAdapter myAdapter = new MyAdapter(datas, getActivity());
-        list_orders.setAdapter(myAdapter);
-        list_orders.setOnItemClickListener(this);
+        list_shops = (ListView) view.findViewById(R.id.list_order);
+        GoodsAdapter goodsAdapter = new GoodsAdapter(datas, getActivity());
+        list_shops.setAdapter(goodsAdapter);
+        list_shops.setOnItemClickListener(this);
         return view;
     }
 
@@ -52,20 +52,20 @@ public class ShopListFragment extends Fragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         FragmentTransaction fTransaction = fManager.beginTransaction();
-        OrderInfoFragment oiFragment;
-        oiFragment = new OrderInfoFragment();
+        ShopInfoFragment siFragment;
+        siFragment = new ShopInfoFragment();
         Bundle bd = new Bundle();
-        bd.putString("state", datas.get(position).state);
-        oiFragment.setArguments(bd);
+//        bd.putString("state", datas.get(position).state);
+        siFragment.setArguments(bd);
         //获取Activity的控件
-        TextView txt_title = (TextView) getActivity().findViewById(R.id.order_item_title);
-        txt_title.setText(datas.get(position).state);
+        TextView txt_title = (TextView) getActivity().findViewById(R.id.shops_item_title);
+        txt_title.setText(datas.get(position).getGoodsID());
         //加上Fragment替换动画
-//        fTransaction.setCustomAnimations(R.animator.fragment_slide_left_enter, R.animator.fragment_slide_left_exit);
-//        fTransaction.replace(R.id.fl_content, oiFragment);
-//        //调用addToBackStack将Fragment添加到栈中
-//        fTransaction.addToBackStack(null);
-//        fTransaction.commit();
+        fTransaction.setCustomAnimations(R.animator.fragment_slide_left_enter, R.animator.fragment_slide_left_exit);
+        fTransaction.replace(R.id.sl_content, siFragment);
+        //调用addToBackStack将Fragment添加到栈中
+        fTransaction.addToBackStack(null);
+        fTransaction.commit();
     }
 
 }
