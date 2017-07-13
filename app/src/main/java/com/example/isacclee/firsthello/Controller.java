@@ -107,14 +107,15 @@ public class Controller {
         return answer;
     }
 
-    public int EditInfo(String email,String password,String phone) {
+    public int EditInfo(String email,String oPassword,String nPassword,String phone) {
 
         String ToServerString=null;
         JSONObject ToServer = new JSONObject();
         int answer=0;
         try {
             ToServer.put("email", email);
-            ToServer.put("password", password);
+            ToServer.put("oPassword", oPassword);
+            ToServer.put("nPassword", nPassword);
             ToServer.put("phone", phone);
             ToServerString = ToServer.toString();
         } catch (JSONException e) {
@@ -270,7 +271,7 @@ public class Controller {
         return answer;
     }
 
-    public int OrderList(String email, OrderStructure[] result) {
+    public int OrderList(String email, ArrayList<OrderStructure> result) {
 
         String ToServerString=null;
         JSONObject ToServer = new JSONObject();
@@ -292,10 +293,12 @@ public class Controller {
                 for (int i=0;i<answer;i++)
                 {
                     JSONObject order=orderList.getJSONObject(i);
-                    result[i].orderID=order.getString("orderID");
-                    result[i].goodsID=order.getString("goodsID");
-                    result[i].number=order.getInt("number");
-                    result[i].state=order.getString("state");
+                    OrderStructure ans=new OrderStructure();
+                    ans.orderID=order.getString("orderID");
+                    ans.goodsID=order.getString("goodsID");
+                    ans.number=order.getInt("number");
+                    ans.state=order.getString("state");
+                    result.add(ans);
                 }
 
             //断开连接*/
