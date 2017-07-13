@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,11 +15,11 @@ import java.util.List;
  */
 
 public class MyAdapter extends BaseAdapter{
-    private List<OrderStructure> mData;
+    private ArrayList<OrderStructure> mData;
 
     private Context mContext;
 
-    public MyAdapter(List<OrderStructure> mData, Context mContext) {
+    public MyAdapter(ArrayList<OrderStructure> mData, Context mContext) {
         this.mData = mData;
         this.mContext = mContext;
     }

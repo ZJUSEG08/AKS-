@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import static java.lang.Thread.sleep;
+
 public class SearchActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     @Override
@@ -27,6 +29,22 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view2);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        while (true) {
+
+            try {
+                sleep(2000);
+                int i = 0;
+                if(i == 1) {
+                    Intent intent = new Intent();
+                    intent.setClass(SearchActivity.this, DeviceConfigureActivity.class);
+                    startActivity(intent);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

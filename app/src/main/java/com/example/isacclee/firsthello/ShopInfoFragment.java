@@ -21,7 +21,7 @@ public class ShopInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_order_info, container, false);
-        TextView txt_content = (TextView) view.findViewById(R.id.order_info);
+        TextView txt_content = (TextView) view.findViewById(R.id.OrderInfo);
         //getArgument获取传递过来的Bundle对象
         txt_content.setText(getArguments().getString("state"));
         return view;

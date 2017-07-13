@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class ShopListFragment extends Fragment implements AdapterView.OnItemClickListener{
     private FragmentManager fManager;
-    private ArrayList<Data> datas;
+    private ArrayList<OrderStructure> datas;
     private ListView list_orders;
 
     public ShopListFragment() {
@@ -26,7 +26,7 @@ public class ShopListFragment extends Fragment implements AdapterView.OnItemClic
 //        this.fManager = fManager;
 //        this.datas = datas;
 //    }
-    public static ShopListFragment newInstance(FragmentManager fManager, ArrayList<Data> datas){
+    public static ShopListFragment newInstance(FragmentManager fManager, ArrayList<OrderStructure> datas){
         ShopListFragment f = new ShopListFragment();
         f.fManager = fManager;
         f.datas = datas;
@@ -55,11 +55,11 @@ public class ShopListFragment extends Fragment implements AdapterView.OnItemClic
         OrderInfoFragment oiFragment;
         oiFragment = new OrderInfoFragment();
         Bundle bd = new Bundle();
-        bd.putString("state", datas.get(position).getOrder_state());
+        bd.putString("state", datas.get(position).state);
         oiFragment.setArguments(bd);
         //获取Activity的控件
         TextView txt_title = (TextView) getActivity().findViewById(R.id.order_item_title);
-        txt_title.setText(datas.get(position).getOrder_state());
+        txt_title.setText(datas.get(position).state);
         //加上Fragment替换动画
 //        fTransaction.setCustomAnimations(R.animator.fragment_slide_left_enter, R.animator.fragment_slide_left_exit);
 //        fTransaction.replace(R.id.fl_content, oiFragment);

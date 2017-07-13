@@ -25,7 +25,7 @@ public class OrderInfoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_order_info, container, false);
         TextView name = (TextView) view.findViewById(R.id.textView15);
         TextView price = (TextView) view.findViewById(R.id.textView16);
-        TextView orderInfo = (TextView) view.findViewById(R.id.order_info);
+        TextView orderInfo = (TextView) view.findViewById(R.id.OrderInfo);
         TextView expressState = (TextView) view.findViewById(R.id.express_state);
         TextView expressID = (TextView) view.findViewById(R.id.expressid);
         //getArgument获取传递过来的Bundle对象

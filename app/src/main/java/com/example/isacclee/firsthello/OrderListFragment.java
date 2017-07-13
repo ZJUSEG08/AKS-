@@ -56,11 +56,18 @@ public class OrderListFragment extends Fragment implements AdapterView.OnItemCli
         OrderInfoFragment oiFragment;
         oiFragment = new OrderInfoFragment();
         Bundle bd = new Bundle();
+
+        Controller controller = new Controller();
+
         bd.putString("name", datas.get(position).goodsID);
         bd.putString("OrderInfo", "订单编号："+datas.get(position).orderID+"\n创建时间:"+datas.get(position).creatingTime+"\n发货时间："+datas.get(position).sendingTime+"\n收货人："+datas.get(position).receiver+"\n收货地址："+datas.get(position).address);
-        bd.putString("price", datas.get(position).price);
-        bd.putString("ExpressID", datas.get(position).getName());
-        bd.putString("ExpressState", datas.get(position).getName());
+
+//        bd.putString("price", datas.get(position).price);
+        bd.putString("price", "100yuan");
+//        bd.putString("ExpressID", datas.get(position).getName());
+        bd.putString("ExpressID", "129f");
+//        bd.putString("ExpressState", datas.get(position).getName());
+        bd.putString("ExpressState", "I'm fine fuck u");
 
         oiFragment.setArguments(bd);
         //获取Activity的控件
