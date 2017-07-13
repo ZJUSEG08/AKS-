@@ -34,7 +34,8 @@ public class Controller {
         }
 
         try{
-            String line=new Bridge().Connect("SignUp",ToServerString);
+            String line = new Bridge().Connect("SignUp",ToServerString);
+
             JSONObject fromServer=new JSONObject(line);
             String result=fromServer.getString("result");
             if (result.equals("Y")){

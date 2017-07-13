@@ -23,38 +23,42 @@ import android.os.Handler;
 import android.os.Message;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 public class Bridge {
+    public String Connect(final String API, final String JsonString) throws InterruptedException {
 
-    String jsonStr;
-
-    public String Connect(final String API, final String JsonString) {
-
-        Runnable networkTask = new Runnable() {
-
+        Callable<String> callable = new Callable<String>() {
             @Override
-            public void run() {
+            public String call() throws Exception {
                 // 在这里进行 http request.网络请求相关操作
+                String jsonStr = "";
 
-                try {
-                    Connection makeOrderConnection = new Connection(API + "/");
-                    makeOrderConnection.send(JsonString);
-                    String AChar;
-                    jsonStr = "";
-                    while ((AChar = makeOrderConnection.getBr().readLine()) != null) {
-                        //接受请求结果
-                        jsonStr += AChar;
-                    }
+                Connection makeOrderConnection = new Connection(API + "/");
+                makeOrderConnection.send(JsonString);
+                String AChar;
 
-                    makeOrderConnection.drop();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                while ((AChar = makeOrderConnection.getBr().readLine()) != null) {
+                    //接受请求结果
+                    jsonStr += AChar;
                 }
+
+                makeOrderConnection.drop();
+                return jsonStr;
             }
         };
-        new Thread(networkTask).start();
-        return jsonStr;
-    }
 
+        FutureTask<String> networkTask = new FutureTask<>(callable);
+        new Thread(networkTask).start();
+
+        String result="";
+        try {
+            result = networkTask.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
