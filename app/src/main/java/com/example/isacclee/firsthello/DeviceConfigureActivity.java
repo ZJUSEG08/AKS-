@@ -12,17 +12,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import static android.nfc.NdefRecord.createMime;
 
 public class DeviceConfigureActivity extends AppCompatActivity implements NfcAdapter.CreateNdefMessageCallback{
 
     private NfcAdapter mNfcAdapter;
-    TextView textViewID;
     TextView GoodsName;
     TextView deviceID;
     String GoodsID;
-
+    TextView price;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -30,22 +30,11 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
         setContentView(R.layout.activity_device_configure);
 
         GoodsName =(TextView) findViewById(R.id.textView4);
-        TextView price = (TextView)findViewById(R.id.textView5);
+         price = (TextView)findViewById(R.id.textView5);
 
-        TextView DeviceID = (TextView)findViewById(R.id.textView);
-
-        Controller controller = new Controller();
-        GoodsStructure goodsStructure = new GoodsStructure();
-        goodsStructure = controller.GoodsInfo(getApplicationContext(),deviceID.getText().toString());
-        GoodsName.setText(goodsStructure.getGoodsName());
-        price.setText(goodsStructure.getPrice().toString());
+         deviceID = (TextView)findViewById(R.id.textView);
 
 
-
-        DeviceStructure deviceStructure = new DeviceStructure();
-        deviceStructure.aksID = deviceID.getText().toString();
-        controller.GetDevice(deviceStructure);
-        GoodsID = deviceStructure.goodsID;
         Button EditButton = (Button) findViewById(R.id.button6);
         EditButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +59,7 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
         // Check for available NFC Adapter
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (mNfcAdapter == null) {
-            textViewID.setText("NFC Not Found.");
+            Toast.makeText(this,"NFC not found",Toast.LENGTH_LONG).show();
         }
         // Register callback
         mNfcAdapter.setNdefPushMessageCallback(this, this);
@@ -125,7 +114,6 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
         super.onResume();
         String action = getIntent().getAction();
 
-        textViewID.append(action);
 //        processNDEFIntent(getIntent());
         // Check to see that the Activity started due to an Android Beam
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
@@ -147,13 +135,21 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
                 NfcAdapter.EXTRA_NDEF_MESSAGES);
         // only one message sent during the beam
         NdefMessage msgID = (NdefMessage) rawMsgs[0];
-        textViewID.append("\nempty message");
         if (null != msgID){
-            textViewID.append("\nnot null");
-            textViewID.append(new String(msgID.getRecords()[0].getPayload()));
-            textViewID.append("\n");
             deviceID.setText(new String(msgID.getRecords()[0].getPayload()));
+            Controller controller = new Controller();
+            GoodsStructure goodsStructure;
+            goodsStructure = controller.GoodsInfo(getApplicationContext(),deviceID.getText().toString());
+            GoodsName.setText(goodsStructure.getGoodsName());
+
+            price.setText(Double.toString(goodsStructure.getPrice()));
+
+            DeviceStructure deviceStructure = new DeviceStructure();
+            deviceStructure.aksID = deviceID.getText().toString();
+            controller.GetDevice(deviceStructure);
+            GoodsID = deviceStructure.goodsID;
         }
+
 
     }
 }
