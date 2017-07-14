@@ -10,12 +10,29 @@ import java.io.IOException;
 /**
  * Created by Swallow on 2017/7/10.
  * From http://www.jianshu.com/p/29491fbd8e05
+ *
+ * 使用方法，比如缓存用户名：
+ *
+ * //new一个类
+ * FileCacheUtil fileCacheUtil = new FileCacheUtil();
+ *
+ * //设置缓存
+ * fileCacheUtil.setCache("xxx@qq.com",this,FileCacheUtil.userInfo,MODE_PRIVATE);
+ *
+ * //如果缓存过期，就怎样怎样
+ * if(cacheIsOutDate(this,FileCacheUtil.userInfo)){
+ *    *******
+ * }
+ *
+ * //读取缓存
+ * String result = fileCacheUtil.getCache(this,FileCacheUtil.userInfo);
  */
 
 class FileCacheUtil {
     //定义缓存文件的名字，方便外部调用
     static final String docCache = "docs_cache.txt";//缓存文件 goodsID
     static final String goodsFile = "goodsFile.txt";
+    static final String userInfo = "userInfo.txt";//保存用户信息
     //缓存超时时间
     private static final int CACHE_SHORT_TIMEOUT=1000 * 60 * 5; // 5 分钟
 
