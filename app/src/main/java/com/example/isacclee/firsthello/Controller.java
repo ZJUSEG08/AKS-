@@ -280,7 +280,6 @@ public class Controller {
             ToServer.put("email", email);
             ToServerString = ToServer.toString();
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -300,7 +299,7 @@ public class Controller {
                     ans.state=order.getString("state");
                     result.add(ans);
                 }
-
+            return answer;
             //断开连接*/
         }catch(Exception e){
             e.printStackTrace();

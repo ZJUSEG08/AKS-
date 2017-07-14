@@ -13,9 +13,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class PersonInfoActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
+    private TextView txt_title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,14 @@ public class PersonInfoActivity extends AppCompatActivity implements NavigationV
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view3);
         navigationView.setNavigationItemSelectedListener(this);
+
+        FileCacheUtil fileCacheUtil = new FileCacheUtil();
+        String email = fileCacheUtil.getCache(getApplicationContext(),FileCacheUtil.userInfo);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        View header = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        txt_title = (TextView) header.findViewById(R.id.email_name);
+        txt_title.setText(email);
 
         Button mEditInfoButton = (Button) findViewById(R.id.button2);
         mEditInfoButton.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +86,8 @@ public class PersonInfoActivity extends AppCompatActivity implements NavigationV
         Intent intent = new Intent();
         intent.setClass(PersonInfoActivity.this,LoginActivity.class);
 
+        FileCacheUtil fileCacheUtil = new FileCacheUtil();
+        fileCacheUtil.setCache("null",getApplicationContext(),FileCacheUtil.userInfo,MODE_PRIVATE);
         startActivity(intent);
     }
     protected void JumpToEdit(){

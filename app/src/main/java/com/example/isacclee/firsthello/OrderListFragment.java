@@ -46,10 +46,9 @@ public class OrderListFragment extends Fragment implements AdapterView.OnItemCli
         list_orders = (ListView) view.findViewById(R.id.list_order);
 
         Controller controller = new Controller();
-        datas = new ArrayList<OrderStructure>(10);
         String email = "1111@";
+        datas = new ArrayList<OrderStructure>(100);
         controller.OrderList(email,datas);
-        System.out.print(datas);
         MyAdapter myAdapter = new MyAdapter(datas, getActivity());
         list_orders.setAdapter(myAdapter);
         list_orders.setOnItemClickListener(this);
