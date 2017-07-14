@@ -444,7 +444,7 @@ public class Controller {
      * @param goodsID 物品ID，用于搜索
      * @return 返回值是GoodStructure结构的result
      */
-    private GoodsStructure GoodsInfo(Context mContext, String goodsID) {
+    public GoodsStructure GoodsInfo(Context mContext, String goodsID) {
         //从缓存中获取商品信息
         if (FileCacheUtil.cacheIsOutDate(mContext, FileCacheUtil.goodsFile)) {
             GoodsList(mContext);
