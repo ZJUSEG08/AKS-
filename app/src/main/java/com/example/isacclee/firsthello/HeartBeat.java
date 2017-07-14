@@ -57,33 +57,29 @@ public class HeartBeat extends Thread {
     }
 
     public void run(){
-        try{
-            Connection HeartBeatConnection=new Connection("HeartBeat");
-            //建立一个HttpURLConnection服务器连接
 
-            String ToServerString=ToServer.toString();
-            HeartBeatConnection.send(ToServerString);
-            //向服务器发请求
-
-            String line;
-            while ((line = HeartBeatConnection.br.readLine()) != null) {
+        while (true) {
+            try {
+                String line=new Bridge().Connect("HeartBeat",ToServer.toString());
                 //接受请求结果
-                JSONObject fromServer=new JSONObject(line);
-                String result=fromServer.getString("result");
-                if (result.equals("Success")){
-                    CreateNotice("一键下单成功！","您有一笔订单已下达，点击查看详情");
-                }else{
-                    if (result.equals("Fail")){
-                        CreateNotice("一键下单失败！","本日该设备已达到购买上限，点击查看详情或修改上限");
-                            //一键支付失败的推送
+                JSONObject fromServer = new JSONObject(line);
+                String result = fromServer.getString("result");
+                if (result.equals("Success")) {
+                    CreateNotice("一键下单成功！", "您有一笔订单已下达，点击查看详情");
+                } else {
+                    if (result.equals("Fail")) {
+                        CreateNotice("一键下单失败！", "本日该设备已达到购买上限，点击查看详情或修改上限");
+                        //一键支付失败的推送
                     }
                 }
-            }
-            HeartBeatConnection.drop();
-            //断开连接
-            this.sleep(3000);
-        }catch(Exception e){
+                //断开连接
+                this.sleep(3000);
+            } catch (Exception e) {
 
-        };
+            }
+
+        }
+
     }
+
 }
