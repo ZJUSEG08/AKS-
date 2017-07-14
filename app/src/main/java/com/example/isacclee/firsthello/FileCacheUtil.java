@@ -13,19 +13,19 @@ import java.io.IOException;
  *
  * 使用方法，比如缓存用户名：
  *
- * //new一个类
- * FileCacheUtil fileCacheUtil = new FileCacheUtil();
+ * //获取Application Context
+ * getApplicationContext()
  *
  * //设置缓存
- * fileCacheUtil.setCache("xxx@qq.com",this,FileCacheUtil.userInfo,MODE_PRIVATE);
+ * FileCacheUtil.setCache("xxx@qq.com",getApplicationContext(),FileCacheUtil.userInfo,MODE_PRIVATE);
  *
  * //如果缓存过期，就怎样怎样
- * if(cacheIsOutDate(this,FileCacheUtil.userInfo)){
+ * if(cacheIsOutDate(getApplicationContext(),FileCacheUtil.userInfo)){
  *    *******
  * }
  *
  * //读取缓存
- * String result = fileCacheUtil.getCache(this,FileCacheUtil.userInfo);
+ * String result = FileCacheUtil.getCache(getApplicationContext(),FileCacheUtil.userInfo);
  */
 
 class FileCacheUtil {
@@ -59,7 +59,7 @@ class FileCacheUtil {
     }
 
     //读取缓存，返回字符串
-    String getCache(Context context, String cacheFileName) {
+    static String getCache(Context context, String cacheFileName) {
         FileInputStream fis = null;
         StringBuilder sBuf = new StringBuilder();
         try {
@@ -88,7 +88,7 @@ class FileCacheUtil {
     }
 
     //判断缓存是否过期,比较文件最后修改时间
-    boolean cacheIsOutDate(Context context, String cacheFileName) {
+    static boolean cacheIsOutDate(Context context, String cacheFileName) {
         File file = new File(FileCacheUtil.getCachePath(context) + "/"
                 + cacheFileName);
         //获取缓存文件最后修改的时间，判断是是否从缓存读取

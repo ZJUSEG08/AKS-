@@ -96,14 +96,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         intent.setClass(LoginActivity.this,SignUpActivity.class);
 
         startActivity(intent);
-    };
+    }
 
     protected void JumpToForget(){
         Intent intent = new Intent();
         intent.setClass(LoginActivity.this,FindPasswdActivity.class);
 
         startActivity(intent);
-    };
+    }
 
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
@@ -324,8 +324,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Thread.sleep(2000);
                 int re = controller.SignIn(mEmail,mPassword);
                 if(re == 1){
-                    FileCacheUtil fileCacheUtil = new FileCacheUtil();
-                    fileCacheUtil.setCache(mEmail,APPLICA,FileCacheUtil.userInfo,MODE_PRIVATE);
+                    FileCacheUtil.setCache(mEmail,getApplicationContext(),FileCacheUtil.userInfo,MODE_PRIVATE);
                     return true;
                 }
                 else return false;

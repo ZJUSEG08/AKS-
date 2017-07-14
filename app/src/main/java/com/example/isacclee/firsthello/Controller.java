@@ -383,11 +383,10 @@ public class Controller {
                     //断开连接*/
 
                     //与现有的goodsList进行比较
-                    FileCacheUtil fileCacheUtil = new FileCacheUtil();
                     ArrayList<String> cacheFile = new ArrayList<>();
-                    if (!fileCacheUtil.cacheIsOutDate(mContext, FileCacheUtil.docCache)) {
+                    if (!FileCacheUtil.cacheIsOutDate(mContext, FileCacheUtil.docCache)) {
                         //如果缓存中数据存在而且没有过期，获取并解析JSON生成对象
-                        String Cache = fileCacheUtil.getCache(mContext, FileCacheUtil.docCache);
+                        String Cache = FileCacheUtil.getCache(mContext, FileCacheUtil.docCache);
                         JSONObject goodsObjectInCache = new JSONObject(Cache);
                         JSONArray goodsListInCache = goodsObjectInCache.getJSONArray("goodsList");
                         for (int i = 0; i < goodsListInCache.length(); i++) {
@@ -448,12 +447,11 @@ public class Controller {
      */
     private GoodsStructure GoodsInfo(Context mContext, String goodsID) {
         //从缓存中获取商品信息
-        FileCacheUtil fileCacheUtil = new FileCacheUtil();
-        if (fileCacheUtil.cacheIsOutDate(mContext, FileCacheUtil.goodsFile)) {
+        if (FileCacheUtil.cacheIsOutDate(mContext, FileCacheUtil.goodsFile)) {
             GoodsList(mContext);
         }
 
-        String fileCache = fileCacheUtil.getCache(mContext, FileCacheUtil.goodsFile);
+        String fileCache = FileCacheUtil.getCache(mContext, FileCacheUtil.goodsFile);
         GoodsStructure result = new GoodsStructure();
         try {
             JSONObject goodsObjectInCache = new JSONObject(fileCache);
