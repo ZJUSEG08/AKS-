@@ -25,7 +25,6 @@ public class EditPersonActivity extends AppCompatActivity {
         oPasswordView = (EditText) findViewById(R.id.editText);
         nPasswordView = (EditText) findViewById(R.id.editText2);
         TelView = (EditText) findViewById(R.id.editText3);
-        emailView = (EditText) findViewById(R.id.editText4);
         Button changeButton = (Button) findViewById(R.id.button);
         changeButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
@@ -44,10 +43,10 @@ public class EditPersonActivity extends AppCompatActivity {
         String Telephone;
         oPassword =oPasswordView.getText().toString();
         nPassword =nPasswordView.getText().toString();
-        Email =emailView.getText().toString();
         Telephone =TelView.getText().toString();
 
         Controller controller = new Controller();
+        Email = "1111@";
         int re = controller.EditInfo(Email,oPassword,nPassword,Telephone);
         if(re == 1){
             Toast.makeText(this, "修改成功！", Toast.LENGTH_SHORT).show();

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -43,6 +44,12 @@ public class OrderListFragment extends Fragment implements AdapterView.OnItemCli
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order_list, container, false);
         list_orders = (ListView) view.findViewById(R.id.list_order);
+
+        Controller controller = new Controller();
+        datas = new ArrayList<OrderStructure>(10);
+        String email = "1111@";
+        controller.OrderList(email,datas);
+        System.out.print(datas);
         MyAdapter myAdapter = new MyAdapter(datas, getActivity());
         list_orders.setAdapter(myAdapter);
         list_orders.setOnItemClickListener(this);

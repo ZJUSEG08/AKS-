@@ -31,20 +31,20 @@ public class SearchActivity extends AppCompatActivity implements NavigationView.
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        while (true) {
-
-            try {
-                sleep(2000);
-                int i = 0;
-                if(i == 1) {
-                    Intent intent = new Intent();
-                    intent.setClass(SearchActivity.this, DeviceConfigureActivity.class);
-                    startActivity(intent);
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+//        while (true) {
+//
+//            try {
+//                sleep(2000);
+//                int i = 0;
+//                if(i == 1) {
+//                    Intent intent = new Intent();
+//                    intent.setClass(SearchActivity.this, DeviceConfigureActivity.class);
+//                    startActivity(intent);
+//                }
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
 

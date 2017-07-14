@@ -3,6 +3,7 @@ package com.example.isacclee.firsthello;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -322,8 +323,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Controller controller = new Controller();
                 Thread.sleep(2000);
                 int re = controller.SignIn(mEmail,mPassword);
-                if(re == 1)
+                if(re == 1){
+                    FileCacheUtil fileCacheUtil = new FileCacheUtil();
+                    fileCacheUtil.setCache(mEmail,APPLICA,FileCacheUtil.userInfo,MODE_PRIVATE);
                     return true;
+                }
                 else return false;
             } catch (InterruptedException e) {
                 return false;

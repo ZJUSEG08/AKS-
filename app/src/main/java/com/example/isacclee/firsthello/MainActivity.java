@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //email part
-        String email = new String("LGD");
+        String email = new String("1111@");
 //        email = getEmail();
         navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.inflateHeaderView(R.layout.nav_header_main);

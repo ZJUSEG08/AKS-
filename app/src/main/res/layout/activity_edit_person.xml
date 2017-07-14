@@ -6,61 +6,77 @@
     android:layout_height="match_parent"
     tools:context="com.example.isacclee.firsthello.EditPersonActivity">
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="旧密码"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="85dp"
-        android:layout_marginLeft="85dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <EditText
-        android:id="@+id/editText4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="邮箱"
-        android:layout_marginTop="25dp"
-        app:layout_constraintTop_toBottomOf="@+id/editText3"
-        android:layout_marginLeft="0dp"
-        app:layout_constraintLeft_toLeftOf="@+id/editText3" />
-
-    <EditText
-        android:id="@+id/editText3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="联系电话"
-        android:layout_marginTop="26dp"
-        app:layout_constraintTop_toBottomOf="@+id/editText2"
-        android:layout_marginLeft="0dp"
-        app:layout_constraintLeft_toLeftOf="@+id/editText2" />
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="新密码"
-        android:layout_marginTop="23dp"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
-        android:layout_marginLeft="0dp"
-        app:layout_constraintLeft_toLeftOf="@+id/editText" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="提交"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/editText4"
-        android:layout_marginLeft="66dp"
-        app:layout_constraintLeft_toLeftOf="@+id/editText4" />
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintTop_toBottomOf="@+id/editText3"
+        android:layout_marginLeft="130dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <!--<android.support.design.widget.TextInputLayout-->
+        <!--android:id="@+id/visible3"-->
+        <!--android:layout_width="142dp"-->
+        <!--android:layout_height="51dp"-->
+        <!--android:layout_marginLeft="94dp"-->
+        <!--android:layout_marginStart="85dp"-->
+        <!--android:layout_marginTop="239dp"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent">-->
+
+    <!--</android.support.design.widget.TextInputLayout>-->
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="207dp"
+        android:layout_height="0dp"
+        android:hint="电话"
+        android:imeActionId="@+id/login"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:imeOptions="actionUnspecified"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:layout_marginTop="36dp"
+        app:layout_constraintTop_toBottomOf="@+id/editText2"
+        android:layout_marginLeft="77dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="207dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:hint="旧的密码"
+        android:imeActionId="@+id/login"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:imeOptions="actionUnspecified"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:singleLine="true"
+        tools:layout_editor_absoluteY="97dp"
+        android:layout_marginLeft="77dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="207dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:hint="新的密码"
+        android:imeActionId="@+id/login"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:imeOptions="actionUnspecified"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:layout_marginTop="48dp"
+        app:layout_constraintTop_toBottomOf="@+id/editText"
+        android:layout_marginLeft="77dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

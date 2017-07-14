@@ -26,7 +26,10 @@ public class MyAdapter extends BaseAdapter{
     @Override
     public int getCount() {
         return mData.size();
+//        return 1;
+
     }
+
     @Override
     public Object getItem(int position) {
         return null;
