@@ -37,7 +37,7 @@ class FileCacheUtil {
     private static final int CACHE_SHORT_TIMEOUT=1000 * 60 * 5; // 5 分钟
 
     /**设置缓存
-     content是要存储的内容，可以是任意格式的，不一定是字符串。
+     content是要存储字符串。
      */
     static void setCache(String content, Context context, String cacheFileName, int mode) {
         FileOutputStream fos = null;
