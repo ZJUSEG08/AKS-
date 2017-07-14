@@ -37,7 +37,7 @@ public class PersonInfoActivity extends AppCompatActivity implements NavigationV
         String email = fileCacheUtil.getCache(getApplicationContext(),FileCacheUtil.userInfo);
         navigationView.setNavigationItemSelectedListener(this);
 
-        View header = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        View header = navigationView.getHeaderView(0);
         txt_title = (TextView) header.findViewById(R.id.email_name);
         txt_title.setText(email);
 
