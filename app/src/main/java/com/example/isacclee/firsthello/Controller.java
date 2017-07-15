@@ -455,7 +455,7 @@ public class Controller {
     }
 
     /**
-     * 获取商品信息
+     * 获取指定ID商品信息
      * @param mContext 上下文环境，这里一般来说就是调用方法的环境，this即可
      * @param goodsID 物品ID，用于搜索
      * @return 返回值是GoodStructure结构的result
@@ -501,6 +501,54 @@ public class Controller {
                 }else {
                     result.setGoodsName("Not found in Cache");
                 }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    /**
+     * 获取缓存中所有的商品信息
+     * @param mContext 上下文环境
+     * @return 返回值是ArrayList<GoodsStructure>结构的result
+     */
+ ArrayList<GoodsStructure> GoodsInfo(Context mContext) {
+        //从缓存中获取商品信息
+        if (FileCacheUtil.cacheIsOutDate(mContext, FileCacheUtil.goodsFile)) {
+            try {
+                GoodsList(mContext);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        String fileCache = FileCacheUtil.getCache(mContext, FileCacheUtil.goodsFile);
+        ArrayList<GoodsStructure> result = new ArrayList<>();
+        GoodsStructure item = new GoodsStructure();
+        try {
+            JSONObject goodsObjectInCache = new JSONObject(fileCache);
+            /*
+            * data={goodsList : [{goodsID : string ,
+                                  name : string ,
+                                  description : string ,
+                                  price : float ,
+                                  picture : url}]
+                   }
+            **/
+            JSONArray goodsListInCache = goodsObjectInCache.getJSONArray("goodsList");
+            int i;
+            for (i = 0; i < goodsListInCache.length(); i++) {
+                JSONObject goodsInCache = goodsListInCache.getJSONObject(i);
+
+                item.setGoodsID(goodsInCache.getString("goodsID"));
+                item.setGoodsName(goodsInCache.getString("name"));
+                item.setDescription(goodsInCache.getString("description"));
+                item.setPrice(goodsInCache.getDouble("price"));
+                item.setPicture(goodsInCache.getString("picture"));
+
+                result.add(item);
             }
         } catch (JSONException e) {
             e.printStackTrace();
