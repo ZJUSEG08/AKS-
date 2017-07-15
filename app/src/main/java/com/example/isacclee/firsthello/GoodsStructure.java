@@ -13,29 +13,30 @@ class GoodsStructure {
     private String description;
     private Double price;
     private String picture;
-    private static ArrayList<String> goodsList;
+    private ArrayList<String> goodsList;
 
-    static ArrayList<String> getGoodsList() {
+
+    ArrayList<String> getGoodsList() {
         return goodsList;
     }
 
-    public Double getPrice() {
+    Double getPrice() {
         return price;
     }
 
-    public String getDescription() {
+    String getDescription() {
         return description;
     }
 
-    public String getGoodsID() {
+    String getGoodsID() {
         return goodsID;
     }
 
-    public String getGoodsName() {
+    String getGoodsName() {
         return goodsName;
     }
 
-    public String getPicture() {
+    String getPicture() {
         return picture;
     }
 
@@ -47,16 +48,20 @@ class GoodsStructure {
         this.goodsID = goodsID;
     }
 
-    public static void setGoodsList(ArrayList<String> goodsList) {
-        GoodsStructure.goodsList = goodsList;
+    void setGoodsList(ArrayList<String> goodsList) {
+        this.goodsList = goodsList;
     }
 
-    static void clearGoodsList(){
-        GoodsStructure.goodsList.clear();
+    void clearGoodsList(){
+        goodsList.clear();
     }
 
-    static void addGoodsList(String goodsID){
-        GoodsStructure.goodsList.add(goodsID);
+    void addGoodsList(String goodsID){
+        goodsList.add(goodsID);
+    }
+
+    boolean isEmptyGoodsList(){
+        return goodsList == null;
     }
 
     void setGoodsName(String goodsName) {

@@ -390,6 +390,8 @@ public class Controller {
 
                         //与现有的goodsList进行比较
                         ArrayList<String> cacheFile = new ArrayList<>();
+                        GoodsStructure goodsStructure = new GoodsStructure();
+                        goodsStructure.setGoodsList(new ArrayList<String>());
                         if (!FileCacheUtil.cacheIsOutDate(mContext, FileCacheUtil.docCache)) {
                             //如果缓存中数据存在而且没有过期，获取并解析JSON生成对象
                             String Cache = FileCacheUtil.getCache(mContext, FileCacheUtil.docCache);
@@ -401,33 +403,35 @@ public class Controller {
                             }
 
                             //比较result与cacheFile，结果放到GoodsStructure
-                            GoodsStructure.clearGoodsList();
+                            goodsStructure.setGoodsList(new ArrayList<String>());
                             for (String itemInResult : result) {
                                 if (!cacheFile.contains(itemInResult)) {
-                                    GoodsStructure.addGoodsList(itemInResult);
+                                    goodsStructure.addGoodsList(itemInResult);
                                 }
                             }
                         } else {
                             //数据过期，清空重新写入
-                            GoodsStructure.clearGoodsList();
+                            if(!goodsStructure.isEmptyGoodsList()){
+                                goodsStructure.setGoodsList(new ArrayList<String>());
+                            }
                             for (String itemInResult : result) {
-                                GoodsStructure.addGoodsList(itemInResult);
+                                goodsStructure.addGoodsList(itemInResult);
                             }
                         }
 
                         //设置缓存,新的商品列表
                         JSONArray newCache = new JSONArray();
-                        for (String newItem : GoodsStructure.getGoodsList()) {
+                        for (String newItem : goodsStructure.getGoodsList()) {
                             JSONObject json = new JSONObject();
                             json.put("goodsID", newItem);
                             newCache.put(json);
                         }
 
                         //新的连接，
-                        HeartBeatConnection = new Connection("GoodsInfo/");
-                        HeartBeatConnection.send(newCache.toString());
+                        Connection GoodsInfo = new Connection("GoodsInfo/");
+                        GoodsInfo.send(newCache.toString());
                         jsonStr = "";
-                        while ((line = HeartBeatConnection.br.readLine()) != null) {
+                        while ((line = GoodsInfo.getBr().readLine()) != null) {
                             //接受请求结果
                             jsonStr += line;
                         }

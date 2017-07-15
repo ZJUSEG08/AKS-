@@ -40,18 +40,20 @@
         <activity android:name=".FindPasswdActivity" />
         <activity
             android:name=".SearchActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
         <activity
             android:name=".PersonInfoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".EditPersonActivity" />
         <activity android:name=".DeviceConfigureActivity">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.nfc.action.NDEF_DISCOVERED"/> -->
-            <!-- <category android:name="android.intent.category.DEFAULT"/> -->
-            <!-- <data android:mimeType="application/vnd.com.g08.swallow.dashbutton"/> -->
-            <!-- </intent-filter> -->
+             <intent-filter>
+             <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
+             <category android:name="android.intent.category.DEFAULT"/>
+             <data android:mimeType="application/vnd.com.g08.swallow.dashbutton"/>
+             </intent-filter>
         </activity>
         <activity android:name=".ShopActivity">
             <intent-filter>
