@@ -12,11 +12,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class ShopListFragment extends Fragment implements AdapterView.OnItemClickListener{
     private FragmentManager fManager;
-    private ArrayList<GoodsStructure> datas;
+    private List<GoodsStructure> datas;
     private ListView list_shops;
 
     public ShopListFragment() {
@@ -42,8 +43,8 @@ public class ShopListFragment extends Fragment implements AdapterView.OnItemClic
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order_list, container, false);
         list_shops = (ListView) view.findViewById(R.id.list_order);
-        GoodsAdapter goodsAdapter = new GoodsAdapter(datas, getActivity());
-        list_shops.setAdapter(goodsAdapter);
+//        GoodsAdapter goodsAdapter = new GoodsAdapter(datas, getActivity());
+//        list_shops.setAdapter(goodsAdapter);
         list_shops.setOnItemClickListener(this);
         return view;
     }
@@ -51,21 +52,21 @@ public class ShopListFragment extends Fragment implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        FragmentTransaction fTransaction = fManager.beginTransaction();
-        ShopInfoFragment siFragment;
-        siFragment = new ShopInfoFragment();
-        Bundle bd = new Bundle();
-//        bd.putString("state", datas.get(position).state);
-        siFragment.setArguments(bd);
-        //获取Activity的控件
-        TextView txt_title = (TextView) getActivity().findViewById(R.id.shops_item_title);
-        txt_title.setText(datas.get(position).getGoodsID());
-        //加上Fragment替换动画
-        fTransaction.setCustomAnimations(R.animator.fragment_slide_left_enter, R.animator.fragment_slide_left_exit);
-        fTransaction.replace(R.id.sl_content, siFragment);
-        //调用addToBackStack将Fragment添加到栈中
-        fTransaction.addToBackStack(null);
-        fTransaction.commit();
+//        FragmentTransaction fTransaction = fManager.beginTransaction();
+//        ShopInfoFragment siFragment;
+//        siFragment = new ShopInfoFragment();
+//        Bundle bd = new Bundle();
+////        bd.putString("state", datas.get(position).state);
+//        siFragment.setArguments(bd);
+//        //获取Activity的控件
+//        TextView txt_title = (TextView) getActivity().findViewById(R.id.shops_item_title);
+//        txt_title.setText(datas.get(position).getGoodsID());
+//        //加上Fragment替换动画
+//        fTransaction.setCustomAnimations(R.animator.fragment_slide_left_enter, R.animator.fragment_slide_left_exit);
+//        fTransaction.replace(R.id.sl_content, siFragment);
+//        //调用addToBackStack将Fragment添加到栈中
+//        fTransaction.addToBackStack(null);
+//        fTransaction.commit();
     }
 
 }

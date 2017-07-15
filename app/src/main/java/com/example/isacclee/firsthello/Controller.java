@@ -7,6 +7,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -137,7 +140,7 @@ public class Controller {
         }
         return answer;
     }
-
+//askid - > deviceId ,email->username
     public int CheckDevice(String email,String aksID) {
 
         String ToServerString=null;
@@ -173,6 +176,7 @@ public class Controller {
         return answer;
     }
 
+    //aksId -> data
     public void GetDevice(DeviceStructure Device) {
 
         String ToServerString=null;
@@ -203,6 +207,7 @@ public class Controller {
         }
     }
 
+    //修改
     public int UpdateDevice(DeviceStructure Device) {
 
         String ToServerString=null;
@@ -241,6 +246,7 @@ public class Controller {
         return answer;
     }
 
+    //解除绑定
     public int ResetDevice(String aksID) {
 
         String ToServerString=null;
@@ -350,92 +356,102 @@ public class Controller {
      * 获取商品列表，新的商品ID将用于获取商品信息
      * @param mContext 上下文环境，这里一般来说就是调用方法的环境，this即可
      */
-    private void GoodsList(final Context mContext) {
+    private void GoodsList(final Context mContext)  throws InterruptedException {
         /*
          * 网络操作相关的子线程
          */
-        Runnable networkTask = new Runnable() {
+
+        Callable<String> callable = new Callable<String>() {
             @Override
-            public void run() {
-                try {
-                    ArrayList<String> result = new ArrayList<>();
+            public String call() throws Exception {
+                    try {
+                        ArrayList<String> result = new ArrayList<>();
 
-                    Connection HeartBeatConnection = new Connection("GoodsList/");
-                    HeartBeatConnection.send("");
+                        Connection HeartBeatConnection = new Connection("GoodsList/");
+                        HeartBeatConnection.send("");
 
-                    //接受请求结果
-                    String line;
-                    String jsonStr = "";
-                    while ((line = HeartBeatConnection.getBr().readLine()) != null) {
                         //接受请求结果
-                        jsonStr += line;
-                    }
-
-                    JSONObject fromServer = new JSONObject(jsonStr);
-                    JSONArray goodsList = fromServer.getJSONArray("goodsList");
-                    int answer = goodsList.length();
-                    for (int i = 0; i < answer; i++) {
-                        JSONObject goods = goodsList.getJSONObject(i);
-                        result.add(goods.getString("goodsID"));
-                    }
-                    HeartBeatConnection.drop();
-                    //断开连接*/
-
-                    //与现有的goodsList进行比较
-                    ArrayList<String> cacheFile = new ArrayList<>();
-                    if (!FileCacheUtil.cacheIsOutDate(mContext, FileCacheUtil.docCache)) {
-                        //如果缓存中数据存在而且没有过期，获取并解析JSON生成对象
-                        String Cache = FileCacheUtil.getCache(mContext, FileCacheUtil.docCache);
-                        JSONObject goodsObjectInCache = new JSONObject(Cache);
-                        JSONArray goodsListInCache = goodsObjectInCache.getJSONArray("goodsList");
-                        for (int i = 0; i < goodsListInCache.length(); i++) {
-                            JSONObject goodsInCache = goodsListInCache.getJSONObject(i);
-                            cacheFile.add(goodsInCache.getString("goodsID"));
+                        String line;
+                        String jsonStr = "";
+                        while ((line = HeartBeatConnection.getBr().readLine()) != null) {
+                            //接受请求结果
+                            jsonStr += line;
                         }
 
-                        //比较result与cacheFile，结果放到GoodsStructure
-                        GoodsStructure.clearGoodsList();
-                        for (String itemInResult : result) {
-                            if (!cacheFile.contains(itemInResult)) {
+                        JSONObject fromServer = new JSONObject(jsonStr);
+                        JSONArray goodsList = fromServer.getJSONArray("goodsList");
+                        int answer = goodsList.length();
+                        for (int i = 0; i < answer; i++) {
+                            JSONObject goods = goodsList.getJSONObject(i);
+                            result.add(goods.getString("goodsID"));
+                        }
+                        HeartBeatConnection.drop();
+                        //断开连接*/
+
+                        //与现有的goodsList进行比较
+                        ArrayList<String> cacheFile = new ArrayList<>();
+                        if (!FileCacheUtil.cacheIsOutDate(mContext, FileCacheUtil.docCache)) {
+                            //如果缓存中数据存在而且没有过期，获取并解析JSON生成对象
+                            String Cache = FileCacheUtil.getCache(mContext, FileCacheUtil.docCache);
+                            JSONObject goodsObjectInCache = new JSONObject(Cache);
+                            JSONArray goodsListInCache = goodsObjectInCache.getJSONArray("goodsList");
+                            for (int i = 0; i < goodsListInCache.length(); i++) {
+                                JSONObject goodsInCache = goodsListInCache.getJSONObject(i);
+                                cacheFile.add(goodsInCache.getString("goodsID"));
+                            }
+
+                            //比较result与cacheFile，结果放到GoodsStructure
+                            GoodsStructure.clearGoodsList();
+                            for (String itemInResult : result) {
+                                if (!cacheFile.contains(itemInResult)) {
+                                    GoodsStructure.addGoodsList(itemInResult);
+                                }
+                            }
+                        } else {
+                            //数据过期，清空重新写入
+                            GoodsStructure.clearGoodsList();
+                            for (String itemInResult : result) {
                                 GoodsStructure.addGoodsList(itemInResult);
                             }
                         }
-                    } else {
-                        //数据过期，清空重新写入
-                        GoodsStructure.clearGoodsList();
-                        for (String itemInResult : result) {
-                            GoodsStructure.addGoodsList(itemInResult);
+
+                        //设置缓存,新的商品列表
+                        JSONArray newCache = new JSONArray();
+                        for (String newItem : GoodsStructure.getGoodsList()) {
+                            JSONObject json = new JSONObject();
+                            json.put("goodsID", newItem);
+                            newCache.put(json);
                         }
-                    }
 
-                    //设置缓存,新的商品列表
-                    JSONArray newCache = new JSONArray();
-                    for (String newItem : GoodsStructure.getGoodsList()) {
-                        JSONObject json = new JSONObject();
-                        json.put("goodsID", newItem);
-                        newCache.put(json);
-                    }
+                        //新的连接，
+                        HeartBeatConnection = new Connection("GoodsInfo/");
+                        HeartBeatConnection.send(newCache.toString());
+                        jsonStr = "";
+                        while ((line = HeartBeatConnection.br.readLine()) != null) {
+                            //接受请求结果
+                            jsonStr += line;
+                        }
 
-                    //新的连接，
-                    HeartBeatConnection = new Connection("GoodsInfo/");
-                    HeartBeatConnection.send(newCache.toString());
-                    jsonStr = "";
-                    while ((line = HeartBeatConnection.br.readLine()) != null) {
-                        //接受请求结果
-                        jsonStr += line;
+                        //将商品信息保存在本地
+                        FileCacheUtil.setCache(jsonStr,
+                                mContext,
+                                FileCacheUtil.goodsFile,
+                                MODE_PRIVATE);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-
-                    //将商品信息保存在本地
-                    FileCacheUtil.setCache(jsonStr,
-                            mContext,
-                            FileCacheUtil.goodsFile,
-                            MODE_PRIVATE);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    return "Y";
                 }
+            };
+
+            FutureTask<String> networkTask = new FutureTask<>(callable);
+            new Thread(networkTask).start();
+
+            try {
+                networkTask.get();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
             }
-        };
-        new Thread(networkTask).start();
     }
 
     /**
@@ -447,7 +463,11 @@ public class Controller {
     public GoodsStructure GoodsInfo(Context mContext, String goodsID) {
         //从缓存中获取商品信息
         if (FileCacheUtil.cacheIsOutDate(mContext, FileCacheUtil.goodsFile)) {
-            GoodsList(mContext);
+            try {
+                GoodsList(mContext);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         String fileCache = FileCacheUtil.getCache(mContext, FileCacheUtil.goodsFile);

@@ -81,7 +81,7 @@ public class OrderListFragment extends Fragment implements AdapterView.OnItemCli
         txt_title.setText(datas.get(position).state);
 //        加上Fragment替换动画
         fTransaction.setCustomAnimations(R.animator.fragment_slide_left_enter, R.animator.fragment_slide_left_exit);
-        fTransaction.replace(R.id.fl_content, oiFragment);
+//        fTransaction.replace(R.id.fl_content, oiFragment);
         //调用addToBackStack将Fragment添加到栈中
         fTransaction.addToBackStack(null);
         fTransaction.commit();
