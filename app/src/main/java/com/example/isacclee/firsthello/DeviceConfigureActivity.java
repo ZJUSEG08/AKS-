@@ -23,6 +23,10 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
     TextView deviceID;
     String GoodsID;
     TextView price;
+    Controller controller = new Controller();
+    GoodsStructure goodsStructure = new GoodsStructure();
+    EditText count;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -30,10 +34,19 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
         setContentView(R.layout.activity_device_configure);
 
         GoodsName =(TextView) findViewById(R.id.textView4);
-         price = (TextView)findViewById(R.id.textView5);
+        price = (TextView)findViewById(R.id.textView5);
 
-         deviceID = (TextView)findViewById(R.id.textView);
+        deviceID = (TextView)findViewById(R.id.textView);
 
+        Intent intent = getIntent();
+        if(intent != null){
+            String id = intent.getStringExtra("goodsId");
+            TextView Goodsname = (TextView) findViewById(R.id.textView4);
+            TextView Price = (TextView) findViewById(R.id.textView5);
+            goodsStructure = controller.GoodsInfo(this,id);
+            Goodsname.setText(goodsStructure.getGoodsName());
+            Price.setText(goodsStructure.getPrice().toString()+"元");
+        }
 
         Button EditButton = (Button) findViewById(R.id.button6);
         EditButton.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +73,7 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (mNfcAdapter == null) {
             Toast.makeText(this,"NFC not found",Toast.LENGTH_LONG).show();
-        }
+        }else
         // Register callback
         mNfcAdapter.setNdefPushMessageCallback(this, this);
     }
@@ -76,7 +89,7 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
     }
     public void Edit(){
         Controller controller = new Controller();
-        EditText count = (EditText)findViewById(R.id.editText8);
+        count = (EditText)findViewById(R.id.editText8);
         EditText limit = (EditText)findViewById(R.id.editText6);
         EditText name = (EditText)findViewById(R.id.editText9);
         EditText address = (EditText)findViewById(R.id.editText10);
@@ -120,8 +133,6 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
             processNDEFIntent(getIntent());
         }else{
             String result = FileCacheUtil.getCache(getApplicationContext(),FileCacheUtil.currentGoodsID);
-            GoodsStructure goodsStructure = new GoodsStructure();
-            Controller controller = new Controller();
             goodsStructure = controller.GoodsInfo(getApplicationContext(),deviceID.getText().toString());
 
         }
@@ -144,7 +155,6 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
         NdefMessage msgID = (NdefMessage) rawMsgs[0];
         if (null != msgID){
             deviceID.setText(new String(msgID.getRecords()[0].getPayload()));
-            Controller controller = new Controller();
             GoodsStructure goodsStructure;
 
             DeviceStructure deviceStructure = new DeviceStructure();

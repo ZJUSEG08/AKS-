@@ -532,7 +532,7 @@ public class Controller {
 
         String fileCache = FileCacheUtil.getCache(mContext, FileCacheUtil.goodsFile);
         ArrayList<GoodsStructure> result = new ArrayList<>();
-        GoodsStructure item = new GoodsStructure();
+
         try {
             JSONObject goodsObjectInCache = new JSONObject(fileCache);
             /*
@@ -548,6 +548,7 @@ public class Controller {
             for (i = 0; i < goodsListInCache.length(); i++) {
                 JSONObject goodsInCache = goodsListInCache.getJSONObject(i);
 
+                GoodsStructure item = new GoodsStructure();
                 item.setGoodsID(goodsInCache.getString("goodsID"));
                 item.setGoodsName(goodsInCache.getString("name"));
                 item.setDescription(goodsInCache.getString("description"));
