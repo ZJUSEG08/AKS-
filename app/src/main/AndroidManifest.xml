@@ -32,7 +32,12 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".SignUpActivity"
             android:label="@string/title_activity_sign_up" />
@@ -47,20 +52,20 @@
         <activity android:name=".EditPersonActivity" />
         <activity android:name=".DeviceConfigureActivity">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.nfc.action.NDEF_DISCOVERED"/> -->
-            <!-- <category android:name="android.intent.category.DEFAULT"/> -->
-            <!-- <data android:mimeType="application/vnd.com.g08.swallow.dashbutton"/> -->
-            <!-- </intent-filter> -->
+             <intent-filter>
+                 <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
+                 <category android:name="android.intent.category.DEFAULT"/>
+                 <data android:mimeType="application/vnd.com.g08.swallow.dashbutton"/>
+             </intent-filter>
         </activity>
         <activity android:name=".OrderDetailActivity">
 
         </activity>
         <activity android:name=".ShopActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
     </application>
 

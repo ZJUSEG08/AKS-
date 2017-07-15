@@ -15,11 +15,13 @@ public class OrderDetailActivity extends AppCompatActivity {
     public TextView ExpressState;
     public TextView ExpressId;
     public TextView GoodName;
-
+    Controller controller = new Controller();
+    GoodsStructure goodsStructure = new GoodsStructure();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
+        initData();
     }
 
     private void initData(){
@@ -28,26 +30,25 @@ public class OrderDetailActivity extends AppCompatActivity {
         Bundle data =intent.getExtras();
         int position =data.getInt("data_position");
         Log.i("receive",String.valueOf(position));
-        OrderStructure orderStructure = MainActivity.datas.get(position-1);
+        OrderStructure orderStructure = MainActivity.datas.get(position);
         Price = (TextView) findViewById(R.id.textView16);
         OrderInfo = (TextView) findViewById(R.id.OrderInfo);
         ExpressState = (TextView) findViewById(R.id.express_state);
         ExpressId= (TextView) findViewById(R.id.expressid);
         GoodName = (TextView) findViewById(R.id.textView15);
 
-        Controller controller = new Controller();
-        GoodsStructure goodsStructure = controller.GoodsInfo(this,orderStructure.goodsID);
+        goodsStructure = controller.GoodsInfo(this,orderStructure.goodsID);
 
         GoodName.setText(goodsStructure.getGoodsName());
         OrderInfo.setText("订单编号："+orderStructure.orderID+"\n创建时间:"+orderStructure.creatingTime+"\n发货时间："+orderStructure.sendingTime+"\n收货人："+orderStructure.receiver+"\n收货地址："+orderStructure.address);
         Price.setText("单价："+goodsStructure.getPrice().toString()+"\n数量:"+String.valueOf(orderStructure.number)+"\n总价："+String.valueOf(orderStructure.number*goodsStructure.getPrice()));
         ExpressId.setText(orderStructure.supplier+"\n单号:"+orderStructure.expressID);
         String wholeState = null;
-        for(int i = 0; i< orderStructure.numOfStates;i++){
-            wholeState += orderStructure.statesList[i].time + " " + orderStructure.statesList[i].state+"\n";
-        }
-        ExpressState.setText(wholeState);
-
+//        for(int i = 0; i< orderStructure.numOfStates;i++){
+//            wholeState += orderStructure.statesList[i].time + " " + orderStructure.statesList[i].state+"\n";
+//        }
+//        ExpressState.setText(wholeState);
+        ExpressState.setText("2015-67-3 .234.324.23 到达北京");
 
     }
 }

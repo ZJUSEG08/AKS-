@@ -61,9 +61,10 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //email part
-//        String email = new String("1111@");
+        String email = new String("1111@");
         FileCacheUtil fileCacheUtil = new FileCacheUtil();
-        String email = fileCacheUtil.getCache(getApplicationContext(),FileCacheUtil.userInfo);
+//        String email = fileCacheUtil.getCache(getApplicationContext(),FileCacheUtil.userInfo);
+//        String email =
         navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.inflateHeaderView(R.layout.nav_header_main);
         txt_title = (TextView) header.findViewById(R.id.email_name);
@@ -73,14 +74,33 @@ public class MainActivity extends AppCompatActivity
         //list part
         listView =(ListView)findViewById(R.id.order_list);
         datas = new ArrayList<OrderStructure>();
-        for (int i =0 ; i < 5; i++){
-            OrderStructure orderStructure = new OrderStructure();
-            orderStructure.creatingTime = ("1997年");
-            orderStructure.goodsID = "500";
-            datas.add(orderStructure);
-        }
-        Toast.makeText(this,"Order",Toast.LENGTH_LONG).show();
+//        for (int i =0 ; i < 5; i++){
+//            OrderStructure orderStructure = new OrderStructure();
+//            orderStructure.creatingTime = ("1997年");
+//            orderStructure.goodsID = "500";
+//            datas.add(orderStructure);
+//        }
+//        Toast.makeText(this,"Order",Toast.LENGTH_LONG).show();
+//        controller.OrderList(email,datas);
+        OrderStructure orderStructure = new OrderStructure();
+        orderStructure.creatingTime="2017-07-16.00.01.25";
+        orderStructure.goodsID ="00001";
+        orderStructure.number =1;
+        orderStructure.statesList=new OrderStructure.States[1];
+        orderStructure.state = "???";
+        orderStructure.numOfStates = 1;
+        orderStructure.address="ZJU";
+        orderStructure.orderID="0000112341";
+        orderStructure.receiver= "LYJ";
+        orderStructure.sendingTime = "2017-07-16.20.50.40";
+        orderStructure.expressID="12341234";
+        orderStructure.supplier="顺风快递";
+        datas.add(orderStructure);
 
+        OrderStructure orderStructure2 = new OrderStructure();
+        orderStructure2.creatingTime="2017-07-16";
+        orderStructure2.goodsID ="00002";
+        datas.add(orderStructure2);
         adapter = new MyAdapter(datas,this);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

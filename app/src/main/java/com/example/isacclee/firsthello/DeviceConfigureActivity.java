@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,16 +39,19 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
 
         deviceID = (TextView)findViewById(R.id.textView);
 
-        Intent intent = getIntent();
-        if(intent != null){
-            String id = intent.getStringExtra("goodsId");
-            TextView Goodsname = (TextView) findViewById(R.id.textView4);
-            TextView Price = (TextView) findViewById(R.id.textView5);
-            goodsStructure = controller.GoodsInfo(this,id);
-            Goodsname.setText(goodsStructure.getGoodsName());
-            Price.setText(goodsStructure.getPrice().toString()+"元");
-        }
+//        Intent intent = getIntent();
+//        if(intent != null){
+//
+//        }
 
+        ImageView imageView = (ImageView) findViewById(R.id.imageView3);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DeviceConfigureActivity.this,ShopActivity.class);
+                startActivity(intent);
+            }
+        });
         Button EditButton = (Button) findViewById(R.id.button6);
         EditButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,10 +85,15 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
     public void Cancel(){
         Controller controller = new Controller();
         controller.ResetDevice(this.deviceID.getText().toString());
+        Intent intent = new Intent();
+        intent.setClass(DeviceConfigureActivity.this,SearchActivity.class);
+        Toast.makeText(this,"已取消绑定",Toast.LENGTH_SHORT).show();
+        startActivity(intent);
     }
     public void Disconnect(){
         Intent intent = new Intent();
         intent.setClass(DeviceConfigureActivity.this,SearchActivity.class);
+        Toast.makeText(this,"已断开连接",Toast.LENGTH_SHORT).show();
         startActivity(intent);
     }
     public void Edit(){
@@ -105,7 +114,13 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
         deviceStructure.receiverName = name.getText().toString();
         deviceStructure.address = address.getText().toString();
         deviceStructure.postCode = postal.getText().toString();
+
         controller.UpdateDevice(deviceStructure);
+        Intent intent = new Intent();
+        intent.setClass(DeviceConfigureActivity.this,SearchActivity.class);
+        Toast.makeText(this,"修改成功",Toast.LENGTH_SHORT).show();
+
+        startActivity(intent);
     }
     @Override
     public NdefMessage createNdefMessage(NfcEvent event) {
@@ -132,9 +147,14 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
             processNDEFIntent(getIntent());
         }else{
-            String result = FileCacheUtil.getCache(getApplicationContext(),FileCacheUtil.currentGoodsID);
-            goodsStructure = controller.GoodsInfo(getApplicationContext(),deviceID.getText().toString());
-
+//            String result = FileCacheUtil.getCache(getApplicationContext(),FileCacheUtil.currentGoodsID);
+//            goodsStructure = controller.GoodsInfo(getApplicationContext(),deviceID.getText().toString());
+            String id = getIntent().getStringExtra("goodsId");
+            TextView Goodsname = (TextView) findViewById(R.id.textView4);
+            TextView Price = (TextView) findViewById(R.id.textView5);
+            goodsStructure = controller.GoodsInfo(this,id);
+            Goodsname.setText(goodsStructure.getGoodsName());
+            Price.setText(goodsStructure.getPrice().toString()+"元");
         }
 
     }
@@ -163,7 +183,7 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
             GoodsID = deviceStructure.goodsID;
 
 //            goodsStructure = controller.GoodsInfo(getApplicationContext(),deviceStructure.goodsID);
-            goodsStructure = controller.GoodsInfo(getApplicationContext(),"00002");
+            goodsStructure = controller.GoodsInfo(getApplicationContext(),"00004");
             GoodsName.setText(goodsStructure.getGoodsName());
 
             price.setText(Double.toString(goodsStructure.getPrice()));

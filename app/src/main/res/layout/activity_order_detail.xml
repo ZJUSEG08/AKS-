@@ -47,7 +47,7 @@
             android:layout_height="5px"
             android:background="@android:color/darker_gray"
             tools:layout_editor_absoluteX="0dp"
-            android:layout_marginTop="88dp"
+            android:layout_marginTop="102dp"
             app:layout_constraintTop_toBottomOf="@+id/view14" />
 
         <View
@@ -135,27 +135,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="7dp"
             app:layout_constraintTop_toBottomOf="@+id/view14"
-            android:layout_marginLeft="47dp"
+            android:layout_marginLeft="41dp"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
             android:id="@+id/express_state"
-            android:layout_width="160dp"
-            android:layout_height="79dp"
+            android:layout_width="295dp"
+            android:layout_height="75dp"
             android:text="TextView"
-            tools:layout_editor_absoluteX="65dp"
-            android:layout_marginTop="48dp"
-            app:layout_constraintTop_toBottomOf="@+id/view16" />
+            android:layout_marginTop="47dp"
+            app:layout_constraintTop_toBottomOf="@+id/view16"
+            android:layout_marginLeft="41dp"
+            app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
             android:id="@+id/expressid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
-            tools:layout_editor_absoluteX="255dp"
-            android:layout_marginTop="18dp"
-            app:layout_constraintTop_toBottomOf="@+id/view16" />
+            android:layout_marginTop="17dp"
+            app:layout_constraintTop_toBottomOf="@+id/view16"
+            android:layout_marginLeft="41dp"
+            app:layout_constraintLeft_toLeftOf="parent" />
     </android.support.constraint.ConstraintLayout>
 </LinearLayout>
