@@ -420,16 +420,18 @@ public class Controller {
                         }
 
                         //设置缓存,新的商品列表
+                        JSONObject newRequest  = new JSONObject();
                         JSONArray newCache = new JSONArray();
                         for (String newItem : goodsStructure.getGoodsList()) {
                             JSONObject json = new JSONObject();
                             json.put("goodsID", newItem);
                             newCache.put(json);
                         }
+                        newRequest.put("goodsList", newCache);
 
                         //新的连接，
                         Connection GoodsInfo = new Connection("GoodsInfo/");
-                        GoodsInfo.send(newCache.toString());
+                        GoodsInfo.send(newRequest.toString());
                         jsonStr = "";
                         while ((line = GoodsInfo.getBr().readLine()) != null) {
                             //接受请求结果
