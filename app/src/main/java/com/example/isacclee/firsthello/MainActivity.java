@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,12 +17,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,15 +34,16 @@ public class MainActivity extends AppCompatActivity
     private TextView txt_title;
     private FrameLayout fl_content;
     private Context mContext;
-    private ArrayList<OrderStructure> datas = null;
+    public static ArrayList<OrderStructure> datas = null;
     private FragmentManager fManager = null;
     private long exitTime = 0;
+    private ListView listView;
+    public MyAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         Controller controller = new Controller();
-        OrderStructure orderStructure = new OrderStructure();
         //set view
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -65,21 +71,35 @@ public class MainActivity extends AppCompatActivity
 
 
         //list part
-        mContext = MainActivity.this;
-        fManager = getFragmentManager();
-        bindViews();
+        listView =(ListView)findViewById(R.id.order_list);
+        datas = new ArrayList<OrderStructure>();
+        for (int i =0 ; i < 5; i++){
+            OrderStructure orderStructure = new OrderStructure();
+            orderStructure.creatingTime = ("1997年");
+            orderStructure.goodsID = "500";
+            datas.add(orderStructure);
+        }
+        Toast.makeText(this,"Order",Toast.LENGTH_LONG).show();
 
-        int count = controller.OrderList(email,datas);
-//        OrderListFragment olFragment = new OrderListFragment(fManager, datas);
-        OrderListFragment olFragment = OrderListFragment.newInstance(fManager, datas);
-        FragmentTransaction ft = fManager.beginTransaction();
-//        ft.replace(R.id.fl_content, olFragment);//这里搞不好会找不到这个类,Mark 一下
-        ft.commit();
+        adapter = new MyAdapter(datas,this);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Intent intent = new Intent(view.getContext(),OrderDetailActivity.class);
+                intent.putExtra("data_position",position);
+                view.getContext().startActivity(intent);
+
+            }
+        });
     }
 
     private void bindViews() {
-        txt_title = (TextView) findViewById(R.id.order_item_title);
-//        fl_content = (FrameLayout) findViewById(R.id.fl_content);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.order_item,null);
+        View view2 = LayoutInflater.from(mContext).inflate(R.layout.content_main,null);
+        txt_title = (TextView) view.findViewById(R.id.order_item_title);//order_item . xml
+//        fl_content = (FrameLayout) view2.findViewById(R.id.fl_content);//content_main.xml
+
     }
 
     @Override

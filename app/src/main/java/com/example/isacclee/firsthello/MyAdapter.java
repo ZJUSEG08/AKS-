@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,24 +16,25 @@ import java.util.List;
  */
 
 public class MyAdapter extends BaseAdapter{
-    private ArrayList<OrderStructure> mData;
+    private List<OrderStructure> mData = new ArrayList<OrderStructure>();
 
     private Context mContext;
+    private LayoutInflater layoutInflater;
 
     public MyAdapter(ArrayList<OrderStructure> mData, Context mContext) {
         this.mData = mData;
         this.mContext = mContext;
+        this.layoutInflater = LayoutInflater.from(mContext);
     }
     @Override
     public int getCount() {
         return mData.size();
-//        return 1;
 
     }
-
+    //TO DO: 可能要改
     @Override
-    public Object getItem(int position) {
-        return null;
+    public OrderStructure getItem(int position) {
+        return mData.get(position);
     }
     @Override
     public long getItemId(int position) {
@@ -45,15 +47,27 @@ public class MyAdapter extends BaseAdapter{
             convertView = LayoutInflater.from(mContext).inflate(R.layout.order_item,parent,false);
             viewHolder = new ViewHolder();
             viewHolder.order_item_title = (TextView) convertView.findViewById(R.id.order_item_title);
+            viewHolder.date =(TextView)convertView.findViewById(R.id.tv_date);
+            viewHolder.pic = (ImageView)convertView.findViewById(R.id.iv_img2);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.order_item_title.setText(mData.get(position).orderID);
+//        viewHolder.order_item_title.setText(mData.get(position).orderID);
+        initViews(getItem(position), (ViewHolder) convertView.getTag());
+
         return convertView;
     }
-    private class ViewHolder{
+
+    private void initViews(OrderStructure data,ViewHolder holder){
+        holder.pic.setTag(data.goodsID);
+        holder.order_item_title.setText(data.goodsID);
+        holder.date.setText(data.creatingTime);
+    }
+    public class ViewHolder{
         TextView order_item_title;
+        TextView date;
+        ImageView pic;
     }
 
 }

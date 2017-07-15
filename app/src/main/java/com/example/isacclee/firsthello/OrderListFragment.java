@@ -49,6 +49,7 @@ public class OrderListFragment extends Fragment implements AdapterView.OnItemCli
         String email = "1111@";
         datas = new ArrayList<OrderStructure>(100);
         controller.OrderList(email,datas);
+
         MyAdapter myAdapter = new MyAdapter(datas, getActivity());
         list_orders.setAdapter(myAdapter);
         list_orders.setOnItemClickListener(this);
@@ -66,7 +67,7 @@ public class OrderListFragment extends Fragment implements AdapterView.OnItemCli
         Controller controller = new Controller();
 
         bd.putString("name", datas.get(position).goodsID);
-        bd.putString("OrderInfo", "订单编号："+datas.get(position).orderID+"\n创建时间:"+datas.get(position).creatingTime+"\n发货时间："+datas.get(position).sendingTime+"\n收货人："+datas.get(position).receiver+"\n收货地址："+datas.get(position).address);
+        bd.putString("OrderInfo", "1");
 
 //        bd.putString("price", datas.get(position).price);
         bd.putString("price", "100yuan");
