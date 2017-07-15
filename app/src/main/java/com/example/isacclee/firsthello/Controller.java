@@ -390,6 +390,8 @@ public class Controller {
 
                         //与现有的goodsList进行比较
                         ArrayList<String> cacheFile = new ArrayList<>();
+                        GoodsStructure goodsStructure = new GoodsStructure();
+                        goodsStructure.setGoodsList(new ArrayList<String>());
                         if (!FileCacheUtil.cacheIsOutDate(mContext, FileCacheUtil.docCache)) {
                             //如果缓存中数据存在而且没有过期，获取并解析JSON生成对象
                             String Cache = FileCacheUtil.getCache(mContext, FileCacheUtil.docCache);
@@ -401,33 +403,35 @@ public class Controller {
                             }
 
                             //比较result与cacheFile，结果放到GoodsStructure
-                            GoodsStructure.clearGoodsList();
+                            goodsStructure.setGoodsList(new ArrayList<String>());
                             for (String itemInResult : result) {
                                 if (!cacheFile.contains(itemInResult)) {
-                                    GoodsStructure.addGoodsList(itemInResult);
+                                    goodsStructure.addGoodsList(itemInResult);
                                 }
                             }
                         } else {
                             //数据过期，清空重新写入
-                            GoodsStructure.clearGoodsList();
+                            if(!goodsStructure.isEmptyGoodsList()){
+                                goodsStructure.setGoodsList(new ArrayList<String>());
+                            }
                             for (String itemInResult : result) {
-                                GoodsStructure.addGoodsList(itemInResult);
+                                goodsStructure.addGoodsList(itemInResult);
                             }
                         }
 
                         //设置缓存,新的商品列表
                         JSONArray newCache = new JSONArray();
-                        for (String newItem : GoodsStructure.getGoodsList()) {
+                        for (String newItem : goodsStructure.getGoodsList()) {
                             JSONObject json = new JSONObject();
                             json.put("goodsID", newItem);
                             newCache.put(json);
                         }
 
                         //新的连接，
-                        HeartBeatConnection = new Connection("GoodsInfo/");
-                        HeartBeatConnection.send(newCache.toString());
+                        Connection GoodsInfo = new Connection("GoodsInfo/");
+                        GoodsInfo.send(newCache.toString());
                         jsonStr = "";
-                        while ((line = HeartBeatConnection.br.readLine()) != null) {
+                        while ((line = GoodsInfo.getBr().readLine()) != null) {
                             //接受请求结果
                             jsonStr += line;
                         }
@@ -455,7 +459,7 @@ public class Controller {
     }
 
     /**
-     * 获取商品信息
+     * 获取指定ID商品信息
      * @param mContext 上下文环境，这里一般来说就是调用方法的环境，this即可
      * @param goodsID 物品ID，用于搜索
      * @return 返回值是GoodStructure结构的result
@@ -501,6 +505,54 @@ public class Controller {
                 }else {
                     result.setGoodsName("Not found in Cache");
                 }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    /**
+     * 获取缓存中所有的商品信息
+     * @param mContext 上下文环境
+     * @return 返回值是ArrayList<GoodsStructure>结构的result
+     */
+ ArrayList<GoodsStructure> GoodsInfo(Context mContext) {
+        //从缓存中获取商品信息
+        if (FileCacheUtil.cacheIsOutDate(mContext, FileCacheUtil.goodsFile)) {
+            try {
+                GoodsList(mContext);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        String fileCache = FileCacheUtil.getCache(mContext, FileCacheUtil.goodsFile);
+        ArrayList<GoodsStructure> result = new ArrayList<>();
+        GoodsStructure item = new GoodsStructure();
+        try {
+            JSONObject goodsObjectInCache = new JSONObject(fileCache);
+            /*
+            * data={goodsList : [{goodsID : string ,
+                                  name : string ,
+                                  description : string ,
+                                  price : float ,
+                                  picture : url}]
+                   }
+            **/
+            JSONArray goodsListInCache = goodsObjectInCache.getJSONArray("goodsList");
+            int i;
+            for (i = 0; i < goodsListInCache.length(); i++) {
+                JSONObject goodsInCache = goodsListInCache.getJSONObject(i);
+
+                item.setGoodsID(goodsInCache.getString("goodsID"));
+                item.setGoodsName(goodsInCache.getString("name"));
+                item.setDescription(goodsInCache.getString("description"));
+                item.setPrice(goodsInCache.getDouble("price"));
+                item.setPicture(goodsInCache.getString("picture"));
+
+                result.add(item);
             }
         } catch (JSONException e) {
             e.printStackTrace();

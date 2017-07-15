@@ -156,7 +156,6 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
             GoodsName.setText(goodsStructure.getGoodsName());
 
             price.setText(Double.toString(goodsStructure.getPrice()));
-
         }
 
 
