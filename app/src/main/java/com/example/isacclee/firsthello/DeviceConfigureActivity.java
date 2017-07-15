@@ -118,7 +118,14 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
         // Check to see that the Activity started due to an Android Beam
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
             processNDEFIntent(getIntent());
+        }else{
+            String result = FileCacheUtil.getCache(getApplicationContext(),FileCacheUtil.currentGoodsID);
+            GoodsStructure goodsStructure = new GoodsStructure();
+            Controller controller = new Controller();
+            goodsStructure = controller.GoodsInfo(getApplicationContext(),deviceID.getText().toString());
+
         }
+
     }
 
     @Override
@@ -139,15 +146,17 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
             deviceID.setText(new String(msgID.getRecords()[0].getPayload()));
             Controller controller = new Controller();
             GoodsStructure goodsStructure;
-            goodsStructure = controller.GoodsInfo(getApplicationContext(),deviceID.getText().toString());
-            GoodsName.setText(goodsStructure.getGoodsName());
-
-            price.setText(Double.toString(goodsStructure.getPrice()));
 
             DeviceStructure deviceStructure = new DeviceStructure();
             deviceStructure.aksID = deviceID.getText().toString();
             controller.GetDevice(deviceStructure);
             GoodsID = deviceStructure.goodsID;
+
+            goodsStructure = controller.GoodsInfo(getApplicationContext(),deviceStructure.goodsID);
+            GoodsName.setText(goodsStructure.getGoodsName());
+
+            price.setText(Double.toString(goodsStructure.getPrice()));
+
         }
 
 

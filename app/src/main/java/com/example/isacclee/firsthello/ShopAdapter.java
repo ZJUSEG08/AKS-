@@ -75,14 +75,14 @@ public class ShopAdapter extends BaseAdapter {
     }
 
     protected class ViewHolder {
-        private ImageView ivImg;
-        private TextView tvTitle;
-        private TextView tvDate;
+        public ImageView ivImg;
+        public TextView tvTitle;
+        public TextView tvDate;
 
         public ViewHolder(View view) {
             ivImg = (ImageView) view.findViewById(R.id.iv_img);
             tvTitle = (TextView) view.findViewById(R.id.shop_title);
-            tvDate = (TextView) view.findViewById(R.id.tv_date);
+            tvDate = (TextView) view.findViewById(R.id.shop_date);
         }
     }
 

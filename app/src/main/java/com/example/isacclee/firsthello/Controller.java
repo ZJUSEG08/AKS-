@@ -140,7 +140,7 @@ public class Controller {
         }
         return answer;
     }
-
+//askid - > deviceId ,email->username
     public int CheckDevice(String email,String aksID) {
 
         String ToServerString=null;
@@ -176,6 +176,7 @@ public class Controller {
         return answer;
     }
 
+    //aksId -> data
     public void GetDevice(DeviceStructure Device) {
 
         String ToServerString=null;
@@ -206,6 +207,7 @@ public class Controller {
         }
     }
 
+    //修改
     public int UpdateDevice(DeviceStructure Device) {
 
         String ToServerString=null;
@@ -244,6 +246,7 @@ public class Controller {
         return answer;
     }
 
+    //解除绑定
     public int ResetDevice(String aksID) {
 
         String ToServerString=null;

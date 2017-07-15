@@ -17,7 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShopActivity extends ActionBarActivity {
+public class ShopActivity extends AppCompatActivity {
 
 //    private TextView txt_title;
 //    private FrameLayout fl_content;
@@ -88,17 +88,28 @@ public class ShopActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_shop);
 
-        listView = (ListView) this.findViewById(R.id.listView1);
+        listView = (ListView) findViewById(R.id.shops_list);
 
         datas = new ArrayList<GoodsStructure>();
+        for (int i = 0; i < 5; i++){
+            GoodsStructure goodsStructure =new GoodsStructure();
+            goodsStructure.setDescription("fuck you");
+            goodsStructure.setGoodsID("1111");
+            goodsStructure.setGoodsName("哈啤");
+            goodsStructure.setPrice(1.2313);
+            datas.add(goodsStructure);
+        }
 
+        Toast.makeText(this,"fuck u",Toast.LENGTH_LONG).show();
+        Controller controller = new Controller();
 
         /**
          * 实例化Adapter对象(注意:必须要写在在getDatas() 方法后面,不然datas中没有数据)
          */
         adapter = new ShopAdapter(this, datas);
+        listView.setAdapter(adapter);
 
     }
 

@@ -73,13 +73,13 @@ public class MainActivity extends AppCompatActivity
 //        OrderListFragment olFragment = new OrderListFragment(fManager, datas);
         OrderListFragment olFragment = OrderListFragment.newInstance(fManager, datas);
         FragmentTransaction ft = fManager.beginTransaction();
-        ft.replace(R.id.fl_content, olFragment);//这里搞不好会找不到这个类,Mark 一下
+//        ft.replace(R.id.fl_content, olFragment);//这里搞不好会找不到这个类,Mark 一下
         ft.commit();
     }
 
     private void bindViews() {
         txt_title = (TextView) findViewById(R.id.order_item_title);
-        fl_content = (FrameLayout) findViewById(R.id.fl_content);
+//        fl_content = (FrameLayout) findViewById(R.id.fl_content);
     }
 
     @Override
