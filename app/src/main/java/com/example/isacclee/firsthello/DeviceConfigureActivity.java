@@ -152,7 +152,8 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
             controller.GetDevice(deviceStructure);
             GoodsID = deviceStructure.goodsID;
 
-            goodsStructure = controller.GoodsInfo(getApplicationContext(),deviceStructure.goodsID);
+//            goodsStructure = controller.GoodsInfo(getApplicationContext(),deviceStructure.goodsID);
+            goodsStructure = controller.GoodsInfo(getApplicationContext(),"00002");
             GoodsName.setText(goodsStructure.getGoodsName());
 
             price.setText(Double.toString(goodsStructure.getPrice()));
