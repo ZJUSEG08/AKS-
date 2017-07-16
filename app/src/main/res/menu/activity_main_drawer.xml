@@ -9,7 +9,7 @@
         <item
             android:id="@+id/search_icon"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="查找详情" />
+            android:title="查找设备" />
         <item
             android:id="@+id/personal_icon"
             android:icon="@drawable/ic_menu_slideshow"

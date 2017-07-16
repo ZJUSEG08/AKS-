@@ -87,7 +87,7 @@ public class PersonInfoActivity extends AppCompatActivity implements NavigationV
         intent.setClass(PersonInfoActivity.this,LoginActivity.class);
 
         FileCacheUtil fileCacheUtil = new FileCacheUtil();
-        fileCacheUtil.setCache("null",getApplicationContext(),FileCacheUtil.userInfo,MODE_PRIVATE);
+        fileCacheUtil.setCache("",getApplicationContext(),FileCacheUtil.userInfo,MODE_PRIVATE);
         startActivity(intent);
     }
     protected void JumpToEdit(){

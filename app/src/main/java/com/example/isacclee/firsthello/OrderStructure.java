@@ -8,6 +8,17 @@ public class OrderStructure {
     public class States{
         public String time;
         public String state;
+        public States(){
+            time = new String();
+            state = new String();
+        }
+    }
+
+    public OrderStructure()
+    {
+      //  statesList=new States[100];
+        statesListState=new String[100];
+        statesListTime=new String[100];
     }
 
     public String orderID;
@@ -21,6 +32,8 @@ public class OrderStructure {
     public String supplier;
     public String expressID;
     public int numOfStates;
-    public States[] statesList;
+    //public States[] statesList;
+    public String[] statesListState;
+    public String[] statesListTime;
 
 }

@@ -89,6 +89,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        String result = FileCacheUtil.getCache(getApplicationContext(),FileCacheUtil.userInfo);
+        if(result != ""){
+            Intent intent = new Intent();
+            intent.setClass(LoginActivity.this,MainActivity.class );
+            startActivity(intent);
+        }
     }
 
     protected void JumpToSignUp(){

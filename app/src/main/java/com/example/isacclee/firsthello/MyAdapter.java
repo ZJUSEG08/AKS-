@@ -61,8 +61,9 @@ public class MyAdapter extends BaseAdapter{
 
     private void initViews(OrderStructure data,ViewHolder holder){
         holder.pic.setTag(data.goodsID);
-        holder.order_item_title.setText(data.goodsID);
-        holder.date.setText(data.creatingTime);
+        GoodsStructure goodsStructure = new Controller().GoodsInfo(this.mContext,data.goodsID);
+        holder.order_item_title.setText(goodsStructure.getGoodsName());
+        holder.date.setText(data.state);
     }
     public class ViewHolder{
         TextView order_item_title;

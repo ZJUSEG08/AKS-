@@ -302,7 +302,7 @@ public class Controller {
                     ans.orderID=order.getString("orderID");
                     ans.goodsID=order.getString("goodsID");
                     ans.number=order.getInt("number");
-                    ans.state=order.getString("state");
+                    ans.state=order.getJSONObject("state").getString("state");
                     result.add(ans);
                 }
             return answer;
@@ -340,11 +340,15 @@ public class Controller {
 
                 JSONArray statesList=fromServer.getJSONArray("statesList");
                 order.numOfStates=statesList.length();
+                //order.statesList=new OrderStructure.States[order.numOfStates];
                 for (int i=0;i<order.numOfStates;i++)
                 {
                     JSONObject state=statesList.getJSONObject(i);
-                    order.statesList[i].time=state.getString("time");
-                    order.statesList[i].state=state.getString("state");
+                    //OrderStructure.States MyState = new OrderStructure.States()
+//                    order.statesList[i].time=state.getString("time");
+//                    order.statesList[i].state=state.getString("state");
+                    order.statesListTime[i]=state.getString("time");
+                    order.statesListState[i]=state.getString("state");
                 }
 
         }catch(Exception e){
