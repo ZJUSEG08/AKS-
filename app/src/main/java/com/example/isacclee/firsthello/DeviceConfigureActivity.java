@@ -49,11 +49,6 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
         count = (EditText)findViewById(R.id.editText8);
 
 
-//        Intent intent = getIntent();
-//        if(intent != null){
-//
-//        }
-
         ImageView imageView = (ImageView) findViewById(R.id.imageView3);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +159,8 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
             goodsStructure = controller.GoodsInfo(this,id);
             Goodsname.setText(goodsStructure.getGoodsName());
             Price.setText(goodsStructure.getPrice().toString()+"元");
+            String ID = FileCacheUtil.getCache(getApplicationContext(),FileCacheUtil.currentDeviceID);
+            deviceID.setText(ID);
         }
 
     }
@@ -183,6 +180,7 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
         // only one message sent during the beam
         NdefMessage msgID = (NdefMessage) rawMsgs[0];
         if (null != msgID){
+            FileCacheUtil.setCache(new String(msgID.getRecords()[0].getPayload()),getApplicationContext(),FileCacheUtil.currentDeviceID,MODE_PRIVATE);
             deviceID.setText(new String(msgID.getRecords()[0].getPayload()));
             GoodsStructure goodsStructure;
 

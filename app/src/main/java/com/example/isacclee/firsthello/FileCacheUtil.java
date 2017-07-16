@@ -34,6 +34,7 @@ class FileCacheUtil {
     static final String goodsFile = "goodsFile.txt";
     static final String userInfo = "userInfo.txt";//保存用户信息
     static final String currentGoodsID = "currentGoodsID";
+    static final String currentDeviceID = "currenDeviceID.txt";
     //缓存超时时间
     private static final int CACHE_SHORT_TIMEOUT=1000 * 60 * 5; // 5 分钟
 

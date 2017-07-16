@@ -9,53 +9,69 @@
     tools:showIn="@layout/app_bar_personal">
 
 
-
-
+    <View
+        android:id="@+id/view20"
+        android:layout_width="fill_parent"
+        android:layout_height="5px"
+        android:background="@android:color/black"
+        android:layout_below="@+id/button5"
+         />
+    <View
+        android:id="@+id/view21"
+        android:layout_width="fill_parent"
+        android:layout_height="10px"
+        android:background="@android:color/black"
+        android:layout_below="@+id/button4"
+         />
+    <View
+        android:id="@+id/view22"
+        android:layout_width="fill_parent"
+        android:layout_height="10px"
+        android:background="@android:color/black"
+        android:layout_below="@+id/button3"
+         />
+    <View
+        android:id="@+id/view23"
+        android:layout_width="fill_parent"
+        android:layout_height="10px"
+        android:background="@android:color/black"
+        android:layout_above="@+id/button2"
+        />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="修改个人信息"
-        android:layout_marginBottom="36dp"
         android:layout_above="@+id/button3"
-        android:layout_alignStart="@+id/button3" />
+        />
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="63dp"
         android:text="修改支付信息"
-        android:layout_marginBottom="34dp"
         android:layout_above="@+id/button4"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="联系客服"
+        android:layout_alignStart="@+id/button5"
         android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/button5" />
+        android:text="联系客服" />
 
     <Button
         android:id="@+id/button5"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="注销"
-        android:layout_marginTop="35dp"
         android:layout_below="@+id/button4"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:text="注销" />
 
-    <!--<ImageButton-->
-                <!--android:id="@+id/imageButton4"-->
-                <!--android:layout_width="82dp"-->
-                <!--android:layout_height="14dp"-->
-                <!--android:layout_weight="1"-->
-                <!--app:srcCompat="@drawable/ic_menu_send" />-->
 
-        <!--</LinearLayout>-->
-        <!---->
-    <!--</LinearLayout>-->
 
 </RelativeLayout>
