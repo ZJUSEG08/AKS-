@@ -9,51 +9,23 @@
     tools:showIn="@layout/app_bar_personal">
 
 
-    <View
-        android:id="@+id/view20"
-        android:layout_width="fill_parent"
-        android:layout_height="5px"
-        android:background="@android:color/black"
-        android:layout_below="@+id/button5"
-         />
-    <View
-        android:id="@+id/view21"
-        android:layout_width="fill_parent"
-        android:layout_height="10px"
-        android:background="@android:color/black"
-        android:layout_below="@+id/button4"
-         />
-    <View
-        android:id="@+id/view22"
-        android:layout_width="fill_parent"
-        android:layout_height="10px"
-        android:background="@android:color/black"
-        android:layout_below="@+id/button3"
-         />
-    <View
-        android:id="@+id/view23"
-        android:layout_width="fill_parent"
-        android:layout_height="10px"
-        android:background="@android:color/black"
-        android:layout_above="@+id/button2"
-        />
-
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="修改个人信息"
         android:layout_above="@+id/button3"
-        />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="13dp" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="63dp"
         android:text="修改支付信息"
         android:layout_above="@+id/button4"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="37dp" />
 
     <Button
         android:id="@+id/button4"

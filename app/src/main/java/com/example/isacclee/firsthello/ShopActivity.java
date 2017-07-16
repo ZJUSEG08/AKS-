@@ -66,7 +66,7 @@ public class ShopActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Toast.makeText(ShopActivity.this,"第"+datas.get(position).toString()+"个被选中",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(ShopActivity.this,"第"+datas.get(position).toString()+"个被选中",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(ShopActivity.this,DeviceConfigureActivity.class);
                 intent.putExtra("goodsId",datas.get(position).getGoodsID());
 //                setResult(RESULT_OK,intent);

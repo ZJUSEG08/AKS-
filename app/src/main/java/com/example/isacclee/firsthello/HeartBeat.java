@@ -41,7 +41,7 @@ public class HeartBeat extends Thread {
 
     private JSONObject ToServer;
 
-    public void HeartBeat(String email) {
+    public HeartBeat(String email) {
         try {
             ToServer = new JSONObject();
             ToServer.put("email", email);

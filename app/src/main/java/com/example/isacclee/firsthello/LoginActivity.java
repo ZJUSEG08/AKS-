@@ -92,6 +92,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         String result = FileCacheUtil.getCache(getApplicationContext(),FileCacheUtil.userInfo);
         if(result != ""){
+
+            FileCacheUtil fileCacheUtil = new FileCacheUtil();
+            String email = fileCacheUtil.getCache(getApplicationContext(),FileCacheUtil.userInfo);
+            HeartBeat heartBeat=new HeartBeat(email);
+            heartBeat.start();
+
             Intent intent = new Intent();
             intent.setClass(LoginActivity.this,MainActivity.class );
             startActivity(intent);
@@ -359,6 +365,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         intent.putExtras(bundle);
                         System.out.println(bundle);
                         intent.putExtra("thisName",ThisName);
+
+                        FileCacheUtil fileCacheUtil = new FileCacheUtil();
+                        String email = fileCacheUtil.getCache(getApplicationContext(),FileCacheUtil.userInfo);
+                        HeartBeat heartBeat=new HeartBeat(email);
+                        heartBeat.start();
+
 
                         startActivity(intent);
                         finish();

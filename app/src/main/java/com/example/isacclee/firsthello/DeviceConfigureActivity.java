@@ -43,11 +43,14 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
 
         GoodsName =(TextView) findViewById(R.id.textView4);
         price = (TextView)findViewById(R.id.textView5);
-
         deviceID = (TextView)findViewById(R.id.textView);
-
         count = (EditText)findViewById(R.id.editText8);
 
+        limit = (EditText)findViewById(R.id.editText6);
+        name = (EditText)findViewById(R.id.editText9);
+        address = (EditText)findViewById(R.id.editText10);
+        postal = (EditText)findViewById(R.id.editText11);
+        tel = (EditText)findViewById(R.id.editText12);
 
         ImageView imageView = (ImageView) findViewById(R.id.imageView3);
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +81,8 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
                 Cancel();
             }
         });
+
+
         // Check for available NFC Adapter
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (mNfcAdapter == null) {
@@ -107,11 +112,7 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
         startActivity(intent);
     }
     public void Edit(){
-        EditText limit = (EditText)findViewById(R.id.editText6);
-        EditText name = (EditText)findViewById(R.id.editText9);
-        EditText address = (EditText)findViewById(R.id.editText10);
-        EditText postal = (EditText)findViewById(R.id.editText11);
-        EditText tel = (EditText)findViewById(R.id.editText12);
+
 
         deviceStructure.phone = tel.getText().toString();
         deviceStructure.aksID = deviceID.getText().toString();
@@ -154,11 +155,20 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
 //            String result = FileCacheUtil.getCache(getApplicationContext(),FileCacheUtil.currentGoodsID);
 //            goodsStructure = controller.GoodsInfo(getApplicationContext(),deviceID.getText().toString());
             String id = getIntent().getStringExtra("goodsId");
-            TextView Goodsname = (TextView) findViewById(R.id.textView4);
-            TextView Price = (TextView) findViewById(R.id.textView5);
+            GoodsID = id;
+            String result = FileCacheUtil.getCache(getApplicationContext(),FileCacheUtil.currentDeviceID);
+            deviceStructure.aksID = result;
+            controller.GetDevice(deviceStructure);
             goodsStructure = controller.GoodsInfo(this,id);
-            Goodsname.setText(goodsStructure.getGoodsName());
-            Price.setText(goodsStructure.getPrice().toString()+"元");
+            GoodsName.setText(goodsStructure.getGoodsName());
+
+            price.setText(goodsStructure.getPrice().toString()+"元");
+
+            tel.setText(deviceStructure.phone);
+            name.setText(deviceStructure.receiverName);
+            address.setText(deviceStructure.address);
+            postal.setText(deviceStructure.postCode);
+            limit.setText(String.valueOf(deviceStructure.orderLimit));
             String ID = FileCacheUtil.getCache(getApplicationContext(),FileCacheUtil.currentDeviceID);
             deviceID.setText(ID);
         }
@@ -182,30 +192,37 @@ public class DeviceConfigureActivity extends AppCompatActivity implements NfcAda
         if (null != msgID){
             FileCacheUtil.setCache(new String(msgID.getRecords()[0].getPayload()),getApplicationContext(),FileCacheUtil.currentDeviceID,MODE_PRIVATE);
             deviceID.setText(new String(msgID.getRecords()[0].getPayload()));
-            GoodsStructure goodsStructure;
-
-            DeviceStructure deviceStructure = new DeviceStructure();
             deviceStructure.aksID = deviceID.getText().toString();
 
             String email = FileCacheUtil.getCache(getApplicationContext(),FileCacheUtil.userInfo);
             int result = controller.CheckDevice(email,deviceStructure.aksID);
             if(result == -1){
-                Toast.makeText(this,"该设备已和该账号绑定",Toast.LENGTH_LONG);
+                Toast.makeText(this,"该设备已和该账号绑定",Toast.LENGTH_LONG).show();
             }else if (result == 0){
-                Toast.makeText(this,"该设备已被其他账号绑定",Toast.LENGTH_LONG);
-                Intent intent2 =  new Intent(DeviceConfigureActivity.this,SearchActivity.class);
-                startActivity(intent2);
+                Toast.makeText(this,"该设备已被其他账号绑定",Toast.LENGTH_LONG).show();
+
+                    Intent intent2 =  new Intent(DeviceConfigureActivity.this,SearchActivity.class);
+                    startActivity(intent2);
+
             }
 
             controller.GetDevice(deviceStructure);
+
             GoodsID = deviceStructure.goodsID;
 
             if(GoodsID == null) GoodsID="00000";
+            if(GoodsID == "null") GoodsID="00000";
             goodsStructure = controller.GoodsInfo(getApplicationContext(),GoodsID);
 //            goodsStructure = controller.GoodsInfo(getApplicationContext(),"00004");
-            GoodsName.setText(goodsStructure.getGoodsName());
+            tel.setText(deviceStructure.phone);
+            name.setText(deviceStructure.receiverName);
+            address.setText(deviceStructure.address);
+            postal.setText(deviceStructure.postCode);
+            limit.setText(String.valueOf(deviceStructure.orderLimit));
 
+            GoodsName.setText(goodsStructure.getGoodsName());
             price.setText(Double.toString(goodsStructure.getPrice()));
+
         }
 
 
