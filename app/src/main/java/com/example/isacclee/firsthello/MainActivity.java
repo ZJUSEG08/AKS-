@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //email part
-//        String email = new String("1111@");
         FileCacheUtil fileCacheUtil = new FileCacheUtil();
         String email = fileCacheUtil.getCache(getApplicationContext(),FileCacheUtil.userInfo);
         navigationView.setNavigationItemSelectedListener(this);

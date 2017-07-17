@@ -46,7 +46,7 @@ public class EditPersonActivity extends AppCompatActivity {
         Telephone =TelView.getText().toString();
 
         Controller controller = new Controller();
-        Email = "1111@";
+        Email = FileCacheUtil.getCache(getApplicationContext(),FileCacheUtil.userInfo);
         int re = controller.EditInfo(Email,oPassword,nPassword,Telephone);
         if(re == 1){
             Toast.makeText(this, "修改成功！", Toast.LENGTH_SHORT).show();

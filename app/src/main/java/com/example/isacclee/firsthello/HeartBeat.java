@@ -73,7 +73,7 @@ public class HeartBeat extends Thread {
                     }
                 }
                 //断开连接
-                this.sleep(3000);
+                this.sleep(3000000);
             } catch (Exception e) {
 
             }
